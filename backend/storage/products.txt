@@ -1,0 +1,32 @@
+[
+	{
+		"name": "producto1",
+		"description": "tremendo",
+		"code": 123456,
+		"photo": "alsdf.com",
+		"price": 99.99,
+		"stock": 10,
+		"id": 1624415668659,
+		"timestamp": "2021-06-23T02:34:28.659Z"
+	},
+	{
+		"name": "producto3",
+		"description": "tremendo",
+		"code": 123456,
+		"photo": "alsdf.com",
+		"price": 99.99,
+		"stock": 10,
+		"id": 1624415680273,
+		"timestamp": "2021-06-23T02:34:40.273Z"
+	},
+	{
+		"name": "producto4",
+		"description": "tremendo",
+		"code": 123456,
+		"photo": "alsdf.com",
+		"price": 99.99,
+		"stock": 10,
+		"id": 1624415683407,
+		"timestamp": "2021-06-23T02:34:43.407Z"
+	}
+]
