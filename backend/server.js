@@ -9,6 +9,8 @@ app.use(express.urlencoded({extended: true}));
 app.use('/productos', routerProducts);
 app.use('/carrito', routerCart);
 
+app.get('*', (req, res) => res.json({error: -2, description: `ruta ${req.originalUrl} método get no implementado`}));
+
 
 const server = app.listen(PORT || 8080, () => {
   console.log(`Servidor inicializado en el puerto ${PORT}.`);
