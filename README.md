@@ -3,7 +3,7 @@
 
 ## Backend/API REST
 
-- Para ejecutar la aplicacion react frontend dirigirse a la carpeta "frontend" y ejecutar el sigiuiente comando en la consola:
+- Para ejecutar el servidor dirigirse a la carpeta "backend" y ejecutar el sigiuiente comando en la consola:
 ```bash
 npm start
 ```
