@@ -1,4 +1,4 @@
-const admin = false;
+const admin = true;
 
 const notAdminErrorDescription = (route, method) => `Ruta ${route} método ${method} no autorizada.`;
 
