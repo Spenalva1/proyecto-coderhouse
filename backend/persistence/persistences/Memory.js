@@ -26,9 +26,6 @@ class Memory {
   }
 
   update(key, id, data) {
-    console.log({key, id, data});
-    console.log(this.state);
-
     const index = this.state[key]?.findIndex(el => el.id == id);
     if (index === -1) {
       return null;
@@ -50,4 +47,4 @@ class Memory {
   }
 }
 
-export default new Memory()
+export default new Memory();
