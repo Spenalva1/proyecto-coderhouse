@@ -4,12 +4,12 @@ import {isAdmin} from '../auth/Auth.js'
 
 const routerProducts = express.Router();
 
-const inventory = new Inventory('./storage/products.txt')
+const inventory = new Inventory()
 
 routerProducts.get('/listar', async (req, res) => {
   const products = await inventory.getProducts();
 
-  if(!products.length) return res.json({error_description: 'No hay productos guardados.', error: 1});
+  if(!products?.length) return res.json({error_description: 'No hay productos guardados.', error: 1});
 
   res.json({data: products, error: 0});
 });

@@ -4,13 +4,13 @@ import Inventory from '../models/Inventory.js';
 
 const routerCart = express.Router();
 
-const inventory = new Inventory('./storage/products.txt');
+const inventory = new Inventory();
 const cart = new Cart('./storage/cart.txt');
 
 routerCart.get('/listar', async (req, res) => {
   const cartItems = await cart.getCartItems();
 
-  if(!cartItems.length) return res.json({error_description: 'El carrito está vacío.', error: 1});
+  if(!cartItems?.length) return res.json({error_description: 'El carrito está vacío.', error: 1});
 
   res.json({data: cartItems, error: 0});
 });
