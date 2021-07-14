@@ -1,4 +1,6 @@
-import FileStorage from '../storage/FileStorage.js'
+import factory from "../persistence/factory.js";
+
+const persistenceMode = process.env.PERSISTENCE_MODE || 'Memory';
 
 class Product {
   constructor(name, description, code, photo, price, stock) {
@@ -8,75 +10,38 @@ class Product {
     this.photo = photo;
     this.price = price;
     this.stock = stock;
-    this.id = Date.now();
     this.timestamp = new Date();
   }
 }
 
 export default class Inventory {
 
-  constructor(route) {
-    this.fs = new FileStorage(route)
+  constructor() {
+    factory.getPersistence(persistenceMode)
+    .then(({default: persistence}) => {
+      this.persistence = persistence;
+    });
   }
 
   async getProducts() {
-    const products = await this.fs.read();
-    return products;
+    return this.persistence.read('products');
   }
 
   async getProduct(id) {
-    const products = await this.fs.read();
-    const product = products.find(product => product.id == id);
-    return product ? product : null;
+    return this.persistence.read('products', id);
   }
 
   async addProduct(name, description, code, photo, price, stock) {
-    const products = await this.fs.read();
     const newProduct = new Product(name, description, code, photo, price, stock);
-    products.push(newProduct);
-    try {
-      await this.fs.save(products);
-      return newProduct;
-    } catch (error) {
-      console.error(error)
-      return null;
-    }
+    return this.persistence.create('products', newProduct);
   }
 
   async updateProduct(id, name, description, code, photo, price, stock) {
-    const products = await this.fs.read();
-    const index = products.findIndex(product => product.id === id);
-    if (index === -1) {
-      return null;
-    }
-    const oldProduct = {...products[index]}
-    products[index] = {
-      ...new Product(name, description, code, photo, price, stock),
-      id: oldProduct.id,
-      timestamp: oldProduct.timestamp,
-    };
-    try {
-      await this.fs.save(products);
-      return products[index];
-    } catch (error) {
-      console.error(error)
-      return null;
-    }
+    const newProduct = new Product(name, description, code, photo, price, stock);
+    return this.persistence.update('products', id, newProduct);
   }
   
   async deleteProduct(id) {
-    const products = await this.fs.read();
-    const index = products.findIndex(product => product.id === id);
-    if (index === -1) {
-      return null;
-    }
-    const [productDeleted] = products.splice(index, 1);
-    try {
-      await this.fs.save(products);
-      return productDeleted;
-    } catch (error) {
-      console.error(error)
-      return null;
-    }
+    return this.persistence.delete('products', id);
   }
 }
