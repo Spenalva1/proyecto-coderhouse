@@ -17,7 +17,7 @@ app.get('*', (req, res) => res.json({error: -2, description: `ruta ${req.origina
 
 
 const server = app.listen(process.env.PORT || 8080, () => {
-  console.log(`Servidor inicializado en el puerto ${process.env.PORT}.`);
+  console.log(`Servidor inicializado en el puerto ${server.address().port}.`);
 })
 
 server.on('error', () => {

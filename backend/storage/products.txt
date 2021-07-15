@@ -6,16 +6,6 @@
 		"photo": "https://picsum.photos/300/200",
 		"price": 99.99,
 		"stock": 10,
-		"timestamp": "2021-07-14T04:00:55.198Z",
-		"id": 1626235255198
-	},
-	{
-		"name": "producto10",
-		"description": "tremendo",
-		"code": 123456,
-		"photo": "https://picsum.photos/300/200",
-		"price": 99.99,
-		"stock": 10,
 		"timestamp": "2021-07-14T04:01:05.420Z",
 		"id": 1626235265420
 	}
