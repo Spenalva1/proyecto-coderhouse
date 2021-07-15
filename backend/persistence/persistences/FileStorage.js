@@ -23,7 +23,7 @@ class FileStorage {
       return el
     } catch (error) {
       console.error(error);
-      throw new Error('Error al guardar.');
+      throw new Error('Error al guardar.', error);
     }
   }
 
@@ -40,7 +40,7 @@ class FileStorage {
 
     } catch (error) {
       console.error(error);
-      throw new Error('Error al leer.');
+      throw new Error('Error al leer.', error);
     }
   }
 
@@ -64,7 +64,7 @@ class FileStorage {
       return content[index];
     } catch (error) {
       console.error(error);
-      throw new Error('Error al guardar.');
+      throw new Error('Error al actualizar.', error);
     }
   }
   
@@ -84,7 +84,7 @@ class FileStorage {
       return el;
     } catch (error) {
       console.error(error);
-      throw new Error('Error al guardar.');
+      throw new Error('Error al borrar.', error);
     }
   }
 }
