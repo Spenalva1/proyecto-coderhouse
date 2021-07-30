@@ -7,7 +7,7 @@
 ```bash
 npm start
 ```
-- Dentro del archivo de la auth se puede modificar la variable para activar/desactivar el admin
+- Dentro del archivo .env se pueden modificar las distintas configuraciones como activar/desactivar el modo admin, cambiar el metodo de persistencia y modificar las credenciales de MySQL y MongoDB
 
 ## Aplicacion Frontend
 

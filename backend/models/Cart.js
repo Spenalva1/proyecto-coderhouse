@@ -1,57 +1,37 @@
-import FileStorage from "../storage/FileStorage.js";
+import factory from "../persistence/factory.js";
+
+const persistenceMode = process.env.PERSISTENCE_MODE || 'Memory';
 
 class CartItem {
   constructor(product) {
     this.product = product;
-    this.id = Date.now();
     this.timestamp = Date.now();
   }
 }
 
 class Cart {
 
-  constructor(route) {
-    this.fs = new FileStorage(route)
+  constructor() {
+    factory.getPersistence(persistenceMode).then(({default: persistence}) => {
+      this.persistence = persistence;
+    });
   }
 
   async getCartItems() {
-    const cartItems = await this.fs.read();
-    return cartItems;
+    return this.persistence.read('carts');
   }
 
   async getCartItem(id) {
-    const cartItems = await this.fs.read();
-    const cartItem = cartItems.find(cartItem => cartItem.id == id);
-    return cartItem ? cartItem : null;
+    return this.persistence.read('carts', id);
   }
 
   async addCartItem(product) {
-    const cartItems = await this.fs.read();
     const cartItem = new CartItem(product);
-    cartItems.push(cartItem);
-    try {
-      await this.fs.save(cartItems);
-      return cartItem;
-    } catch (error) {
-      console.error(error)
-      return null;
-    }
+    return this.persistence.create('carts', cartItem);
   }
   
   async deleteCartItem(id) {
-    const cartItems = await this.fs.read();
-    const index = cartItems.findIndex(cartItem => cartItem.id === id);
-    if (index === -1) {
-      return null;
-    }
-    const [cartItemDeleted] = cartItems.splice(index, 1);
-    try {
-      await this.fs.save(cartItems);
-      return cartItemDeleted;
-    } catch (error) {
-      console.error(error)
-      return null;
-    }
+    return this.persistence.delete('carts', id);
   }
 }
 

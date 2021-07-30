@@ -4,12 +4,12 @@ import {isAdmin} from '../auth/Auth.js'
 
 const routerProducts = express.Router();
 
-const inventory = new Inventory('./storage/products.txt')
+const inventory = new Inventory()
 
 routerProducts.get('/listar', async (req, res) => {
   const products = await inventory.getProducts();
 
-  if(!products.length) return res.json({error_description: 'No hay productos guardados.', error: 1});
+  if(!products?.length) return res.json({error_description: 'No hay productos guardados.', error: 1});
 
   res.json({data: products, error: 0});
 });
@@ -52,7 +52,7 @@ routerProducts.put('/actualizar/:id', isAdmin, async (req, res) => {
   ) {
     return res.json({error_description: 'Parametros erroneos.', error: 2});
   }
-  const product = await inventory.updateProduct(Number(req.params.id), name, description, code, photo, price, stock);
+  const product = await inventory.updateProduct(req.params.id, name, description, code, photo, price, stock);
   if(!product) {
     return res.json({error_description: 'Producto no encontrado.', error: 1})
   }
@@ -60,7 +60,7 @@ routerProducts.put('/actualizar/:id', isAdmin, async (req, res) => {
 });
 
 routerProducts.delete('/borrar/:id', isAdmin, async (req, res) => {
-  const product = await inventory.deleteProduct(Number(req.params.id));
+  const product = await inventory.deleteProduct(req.params.id);
   if(!product) {
     return res.json({error_description: 'producto no encontrado', error: 1})
   }
