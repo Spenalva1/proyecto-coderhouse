@@ -8,19 +8,19 @@ const Product = ({ product, handleProductEdit, handleProductDelete }) => {
   const admin = isAdmin();
 
   const handleClick = () => {
-    history.push(`/products/${product.id}`);
+    history.push(`/products/${product._id}`);
   };
 
   const handleEdit = (e, id) => {
     e.stopPropagation();
     handleProductEdit(id);
   }
-  
+
   const handleDelete = (e, id) => {
     e.stopPropagation();
     handleProductDelete(id);
   }
-  
+
   return (
     <ProductStyles onClick={handleClick}>
       <img src={product.photo} alt={product.name} />
@@ -78,7 +78,7 @@ const ProductStyles = styled.div`
     & > * {
       flex: 1;
     }
-    
+
     button {
       background: none;
       border: none;

@@ -17,7 +17,7 @@ const Products = () => {
       const data = await getProductsRest();
       if (data.error === 0) {
         setProductsState({
-          products: data.data,
+          products: data.products,
           loading: false
         });
       } else {
@@ -47,7 +47,7 @@ const Products = () => {
       if (data.error === 0) {
         setProductsState(prev => {
           console.log(data);
-          const newProducts = prev.products.filter(product => product.id !== data.data.id);
+          const newProducts = prev.products.filter(product => product.id !== data.product.id);
           return {
             ...prev,
             products: newProducts
@@ -64,7 +64,7 @@ const Products = () => {
     return <h2>Cargando...</h2>
   }
 
-  const {products} = productsState 
+  const {products} = productsState
 
   if(!products || !products.length) {
     return <h2>No hay productos disponibles</h2>
@@ -74,10 +74,10 @@ const Products = () => {
     <ProductsStyles>
       <div className="products--list">
         {products.map(product => (
-          <Product 
-            key={product.id} 
-            product={product} 
-            handleProductEdit={handleProductEdit} 
+          <Product
+            key={product.id}
+            product={product}
+            handleProductEdit={handleProductEdit}
             handleProductDelete={handleProductDelete}
           />
         ))}
