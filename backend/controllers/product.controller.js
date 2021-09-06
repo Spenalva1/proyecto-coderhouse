@@ -1,4 +1,3 @@
-import { isValidObjectId } from '../db/db.js';
 import Product from '../models/Product.js';
 
 export async function getProducts(req, res) {
@@ -52,7 +51,7 @@ export async function createProduct(req, res) {
       stock,
     });
 
-    return res.json({ product: newProduct });
+    return res.status(201).json({ product: newProduct });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -83,7 +82,7 @@ export async function updateProduct(req, res) {
         _id: id,
         ...updatedProduct,
       };
-      return res.json({ product });
+      return res.status(201).json({ product });
     }
     return res
       .status(400)
