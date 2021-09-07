@@ -15,10 +15,6 @@ const userSchema = new Mongoose.Schema({
   phone: { type: String, require: true, trim: true },
   address: { type: String, require: true, trim: true },
   photo: { type: String, require: true, trim: true },
-  cart: {
-    type: Mongoose.Schema.ObjectId,
-    ref: 'CartItem.user',
-  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -30,6 +26,21 @@ userSchema.pre('save', async function (next) {
 
   next();
 });
+
+userSchema.virtual('cart', {
+  ref: 'CartItem',
+  localField: '_id',
+  foreignField: 'user',
+});
+
+function autopopulate(next) {
+  this.populate('cart');
+  next();
+}
+
+userSchema.pre('find', autopopulate);
+userSchema.pre('findOne', autopopulate);
+userSchema.pre('findById', autopopulate);
 
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);

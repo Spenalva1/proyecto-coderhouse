@@ -1,3 +1,4 @@
+import logger from '../lib/logger.js';
 import Product from '../models/Product.js';
 
 export async function getProducts(req, res) {
@@ -5,7 +6,7 @@ export async function getProducts(req, res) {
     const products = await Product.find({});
     res.json({ products });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al listar productos. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }
@@ -21,7 +22,7 @@ export async function getProduct(req, res) {
 
     res.json({ product });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al obtener producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }
@@ -53,7 +54,7 @@ export async function createProduct(req, res) {
 
     return res.status(201).json({ product: newProduct });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al crear producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }
@@ -88,7 +89,7 @@ export async function updateProduct(req, res) {
       .status(400)
       .json({ error_description: 'Producto no encontrado.' });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al actualizar producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }
@@ -103,7 +104,7 @@ export async function deleteProduct(req, res) {
     }
     res.json({ product });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al borrar producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }

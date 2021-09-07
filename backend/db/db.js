@@ -1,4 +1,5 @@
 import Mongoose from 'mongoose';
+import logger from '../lib/logger.js';
 
 const isValidObjectId = Mongoose.isValidObjectId;
 export { isValidObjectId };
@@ -9,13 +10,14 @@ const connection = await Mongoose.connect(process.env.MONGODB_ATLAS, {
 });
 
 Mongoose.set('useFindAndModify', false);
+Mongoose.set('useCreateIndex', true);
 
 Mongoose.connection.on('connected', () => {
-  console.log('[Mongoose] - connected in:', process.env.MONGO_URL);
+  logger.info('[Mongoose] - connected in:' + process.env.MONGO_URL);
 });
 
 Mongoose.connection.on('error', (err) => {
-  console.log('[Mongoose] - error:', err);
+  logger.error('[Mongoose] - error:' + err);
 });
 
 export default connection;

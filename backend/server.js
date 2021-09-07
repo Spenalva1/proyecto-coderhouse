@@ -5,8 +5,9 @@ import cors from 'cors';
 import passportMiddleware from './middlewares/passport.js';
 import routerProduct from './routes/product.routes.js';
 import routerUser from './routes/user.routes.js';
-// import routerCart from './routes/cart.js';
+import routerCart from './routes/cart.routes.js';
 import './db/db.js';
+import logger from './lib/logger.js';
 
 const app = express();
 
@@ -24,7 +25,7 @@ passport.use(passportMiddleware);
 // ROUTES
 app.use('/productos', routerProduct);
 app.use('/', routerUser);
-// app.use('/carrito', routerCart);
+app.use('/carrito', routerCart);
 app.get('*', (req, res) =>
   res.json({
     error: -2,
@@ -33,9 +34,9 @@ app.get('*', (req, res) =>
 );
 
 const server = app.listen(process.env.PORT || 8080, () => {
-  console.log(`Servidor inicializado en el puerto ${server.address().port}.`);
+  logger.info(`Servidor inicializado en el puerto ${server.address().port}.`);
 });
 
 server.on('error', (error) => {
-  console.error('Error del servidor.', error);
+  logger.error('Error del servidor.' + error);
 });

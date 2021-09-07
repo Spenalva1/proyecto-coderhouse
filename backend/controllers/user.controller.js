@@ -1,5 +1,18 @@
 import jwt from 'jsonwebtoken';
+import logger from '../lib/logger.js';
+import { sendEmail, signupInfo } from '../lib/mail.js';
 import User from '../models/User.js';
+
+export async function getUsuario(req, res) {
+  try {
+    const user = await User.findById(req.user.id);
+    const userJson = user.toObject({ virtuals: true });
+    res.json({ user: userJson });
+  } catch (error) {
+    logger.error(`Error al obtener usuario. ${error}`);
+    return res.status(500).json({ error_description: 'Error del servidor.' });
+  }
+}
 
 export async function signup(req, res) {
   try {
@@ -39,35 +52,43 @@ export async function signup(req, res) {
       photo,
     });
     await newUser.save();
-    delete newUser.password;
-    return res.status(201).json({ user: newUser });
+    const newUserDoc = newUser._doc;
+    delete newUserDoc.password;
+    sendEmail(signupInfo(newUserDoc), 'Nuevo registro');
+    logger.info('Nuevo usuario registrado.');
+    return res.status(201).json({ user: newUserDoc });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error al registrar usuario. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }
 
 export async function login(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error_description: 'Faltan datos' });
-  }
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error_description: 'Faltan datos' });
+    }
 
-  const user = await User.findOne({ email: email });
-  if (!user) {
-    return res.status(400).json({ error_description: 'Datos incorrectos' });
-  }
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({ error_description: 'Datos incorrectos' });
+    }
 
-  const passwordsMatched = await user.comparePassword(password);
-  if (passwordsMatched) {
+    const passwordsMatched = await user.comparePassword(password);
+    if (!passwordsMatched) {
+      return res.status(400).json({ error_description: 'Datos incorrectos' });
+    }
+
     return res.json({ token: createToken(user) });
+  } catch (error) {
+    logger.error(`Error al loguear usuario. ${error}`);
+    return res.status(500).json({ error_description: 'Error del servidor.' });
   }
-
-  return res.status(400).json({ error_description: 'Datos incorrectos' });
 }
 
-function createToken(user) {
-  return jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: '10m' });
+function createToken({ email, _id }) {
+  return jwt.sign({ email, _id }, process.env.JWT_SECRET, { expiresIn: '15h' });
 }
 
 export async function unauthorized(req, res) {

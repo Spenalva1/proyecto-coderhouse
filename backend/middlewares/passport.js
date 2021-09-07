@@ -1,15 +1,16 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import passport from 'passport';
 import User from '../models/User.js';
+import logger from '../lib/logger.js';
 
 export default new Strategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: process.env.JWT_SECRET || 'secretoparajwt123321',
   },
   async (payload, done) => {
     try {
-      const id = payload?.user?._id;
+      const id = payload?._id;
       if (!id) {
         return done(null, user);
       }
@@ -19,11 +20,14 @@ export default new Strategy(
       }
       return done(null, false);
     } catch (error) {
-      console.error(error);
+      logger.error(`Error de passport. ${error}`);
     }
   }
 );
 
 export function passportAuth() {
-  return passport.authenticate('jwt', { session: false });
+  return passport.authenticate('jwt', {
+    session: false,
+    failureRedirect: '/unauthorized',
+  });
 }

@@ -1,44 +1,26 @@
-// import express from 'express';
-// import Cart from '../models/Cart.js';
-// import Inventory from '../models/Inventory.js';
+import express from 'express';
+import {
+  checkout,
+  createCartItem,
+  deleteCartItem,
+  getCartItems,
+} from '../controllers/cart.controller.js';
+import { isValidMongoId } from '../middlewares/isValidMongoId.js';
+import { passportAuth } from '../middlewares/passport.js';
 
-// const routerCart = express.Router();
+const routerCart = express.Router();
 
-// const inventory = new Inventory();
-// const cart = new Cart('./storage/cart.txt');
+routerCart.get('/listar', passportAuth(), getCartItems);
 
-// routerCart.get('/listar', async (req, res) => {
-//   const cartItems = await cart.getCartItems();
+routerCart.post('/agregar/:id', passportAuth(), isValidMongoId, createCartItem);
 
-//   if (!cartItems?.length) return res.json({ error_description: 'El carrito está vacío.', error: 1 });
+routerCart.delete(
+  '/borrar/:id',
+  passportAuth(),
+  isValidMongoId,
+  deleteCartItem
+);
 
-//   res.json({ data: cartItems, error: 0 });
-// });
+routerCart.post('/checkout', passportAuth(), checkout);
 
-// routerCart.get('/listar/:id', async (req, res) => {
-//   const cartItem = await cart.getCartItem(req.params.id);
-
-//   if (!cartItem) return res.json({ error_description: 'Ítem no encontrado.', error: 1 });
-
-//   res.json({ data: cartItem, error: 0 });
-// });
-
-// routerCart.post('/agregar/:id', async (req, res) => {
-//   const product = await inventory.getProduct(req.params.id);
-
-//   if (!product) return res.json({ error_description: 'Producto no encontrado.', error: 1 });
-
-//   const newCartItem = await cart.addCartItem(product);
-
-//   return res.json({ data: newCartItem, error: 0 });
-// });
-
-// routerCart.delete('/borrar/:id', async (req, res) => {
-//   const cartItem = await cart.deleteCartItem(req.params.id);
-//   if (!cartItem) {
-//     return res.json({ error_description: 'Ítem no encontrado.', error: 1 })
-//   }
-//   res.json({ data: cartItem, error: 0 });
-// });
-
-// export default routerCart;
+export default routerCart;
