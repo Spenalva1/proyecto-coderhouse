@@ -6,10 +6,11 @@ import {
   unauthorized,
 } from '../controllers/user.controller.js';
 import { passportAuth } from '../middlewares/passport.js';
+import multerMiddleware from '../middlewares/multer.js';
 
 const routerUser = express.Router();
 
-routerUser.post('/signup', signup);
+routerUser.post('/signup', multerMiddleware.single('photo'), signup);
 
 routerUser.post('/login', login);
 

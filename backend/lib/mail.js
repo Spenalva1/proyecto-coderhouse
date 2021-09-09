@@ -51,6 +51,6 @@ export async function sendEmail(text, subject, to = process.env.ADMIN_EMAIL) {
       html: formatedEmail(text),
     });
   } catch (error) {
-    logger.error(`Error al enviar mail de sunto ${subject} a ${to}.`);
+    logger.error(`Error al enviar mail de asunto ${subject} a ${to}: ${error}`);
   }
 }

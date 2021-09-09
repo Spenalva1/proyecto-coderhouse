@@ -1,4 +1,5 @@
 import twilio from 'twilio';
+import logger from './logger.js';
 
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 

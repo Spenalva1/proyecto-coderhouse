@@ -12,6 +12,7 @@ import logger from './lib/logger.js';
 const app = express();
 
 // MIDDLEWARES
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -27,9 +28,8 @@ app.use('/productos', routerProduct);
 app.use('/', routerUser);
 app.use('/carrito', routerCart);
 app.get('*', (req, res) =>
-  res.json({
-    error: -2,
-    description: `ruta ${req.originalUrl} método get no implementado`,
+  res.status(400).json({
+    error_description: `ruta ${req.originalUrl} método get no implementado`,
   })
 );
 

@@ -2,8 +2,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import environment from '../environment/environment';
+import { useUser } from '../providers/UserProvider';
 
 const Header = () => {
+  const { logout, user, token } = useUser();
+
   return (
     <HeaderStyles>
       <div>
@@ -12,9 +16,25 @@ const Header = () => {
             Coder Shop
           </button>
         </Link>
-        <span onClick={() => console.log('hola')}>
-          <span>Cart</span>
-        </span>
+        {
+          token ?
+            <nav>
+              {user?.photo && <img className="profile-photo" width="30" height="30" src={`${environment.api}/profile_photos/${user.photo}`} alt={user.firstName} />}
+              <Link to="/cart">
+                Carrito
+              </Link>
+              <span onClick={logout}>Cerrar sesión</span>
+            </nav>
+            :
+            <nav>
+              <Link to="/login">
+                <span>Login</span>
+              </Link>
+              <Link to="/signup">
+                <span>Registrarme</span>
+              </Link>
+            </nav>
+        }
       </div>
     </HeaderStyles>
   );
@@ -44,9 +64,14 @@ const HeaderStyles = styled.header`
       font-weight: 700;
     }
 
-    & > span {
-      cursor: pointer;
+    nav {
       display: flex;
+      gap: 2rem;
+    }
+
+    nav > * {
+      cursor: pointer;
+      flex-direction: row;
       align-items: center;
       font-weight: 600;
     }
@@ -54,6 +79,14 @@ const HeaderStyles = styled.header`
     i {
       margin-right: 5px;
     }
+  }
+
+  a {
+    color: #000000;
+  }
+
+  .profile-photo { 
+    border-radius: 50%;
   }
 
   @media screen and (min-width: 40rem) {

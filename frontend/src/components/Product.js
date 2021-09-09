@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 import isAdmin from '../lib/isAdmin';
+import { addToCartRest } from '../services/CartRest';
 
 const Product = ({ product, handleProductEdit, handleProductDelete }) => {
   const history = useHistory();
@@ -21,6 +22,15 @@ const Product = ({ product, handleProductEdit, handleProductDelete }) => {
     handleProductDelete(id);
   }
 
+  const handleAddToCart = async (e, id) => {
+    e.stopPropagation();
+    try {
+      await addToCartRest(id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <ProductStyles onClick={handleClick}>
       <img src={product.photo} alt={product.name} />
@@ -28,10 +38,13 @@ const Product = ({ product, handleProductEdit, handleProductDelete }) => {
         <h3>{product.name}</h3>
         <span className="price">Price: {formatMoney(product.price)}</span>
       </div>
-      {admin && <div className="buttons">
-        <button type="button"  onClick={(e) => handleEdit(e, product.id)}><i className="far fa-edit"></i></button>
-        <button type="button"  onClick={(e) => handleDelete(e, product.id)}><i className="fas fa-trash"></i></button>
-      </div>}
+      <div className="buttons">
+        {admin && <>
+          <button type="button" onClick={(e) => handleEdit(e, product._id)}><i className="far fa-edit"></i></button>
+          <button type="button" onClick={(e) => handleDelete(e, product._id)}><i className="fas fa-trash"></i></button>
+        </>}
+        <button type="button" onClick={(e) => handleAddToCart(e, product._id)}><i className="fas fa-shopping-cart"></i></button>
+      </div>
     </ProductStyles>
   );
 };
