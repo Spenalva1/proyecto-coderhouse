@@ -1,6 +1,6 @@
 const environment = {
-  api: 'http://localhost:8080',
-  admin: false
-}
+  api: process.env.API_URL || 'http://localhost:8080',
+  admin: false,
+};
 
 export default environment;
