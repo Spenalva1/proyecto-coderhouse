@@ -6,9 +6,11 @@ import GlobalStyles from './globalStyles';
 import { getToken } from './lib/localToken';
 import { UserProvider } from './providers/UserProvider';
 import reportWebVitals from './reportWebVitals';
+import dotenv from 'dotenv';
+dotenv.config();
 
 axios.interceptors.request.use(
-  config => {
+  (config) => {
     const token = getToken();
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
@@ -16,8 +18,8 @@ axios.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json';
     return config;
   },
-  error => {
-    Promise.reject(error)
+  (error) => {
+    Promise.reject(error);
   }
 );
 
@@ -30,7 +32,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
