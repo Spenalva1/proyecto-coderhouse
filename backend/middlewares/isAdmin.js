@@ -4,7 +4,7 @@ const notAdminErrorDescription = (route, method) => `Ruta ${route} método ${met
 
 export const isAdmin = (req, res, next) => {
   if (admin !== 'true') {
-    res.json({error_description: notAdminErrorDescription(req.route.path, req.method), error: -1})
+    res.status(403).json({ error_description: notAdminErrorDescription(req.route.path, req.method) })
   } else {
     next();
   }

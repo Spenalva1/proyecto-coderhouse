@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { deleteProductRest, getProductsRest } from '../providers/ProductsRest';
+import { deleteProductRest, getProductsRest } from '../services/ProductsRest';
 import Product from './Product';
 
 const Products = () => {
-  const [productsState, setProductsState] = useState({products: [], loading: true});
-
-  console.log(productsState);
+  const [productsState, setProductsState] = useState({ products: [], loading: true });
 
   useEffect(() => {
     getProducts();
@@ -15,24 +13,16 @@ const Products = () => {
   const getProducts = async () => {
     try {
       const data = await getProductsRest();
-      if (data.error === 0) {
-        setProductsState({
-          products: data.data,
-          loading: false
-        });
-      } else {
-        setProductsState({
-          products: [],
-          loading: false
-        });
-        console.log('Error ->', data)
-      }
+      setProductsState({
+        products: data.products,
+        loading: false
+      });
     } catch (error) {
-        setProductsState({
-          products: [],
-          loading: false
-        });
-        console.error(error);
+      setProductsState({
+        products: [],
+        loading: false
+      });
+      console.error(error);
     }
   }
 
@@ -41,32 +31,28 @@ const Products = () => {
   }
 
   const handleProductDelete = async (id) => {
-    if(!id) return;
+    if (!id) return;
     try {
       const data = await deleteProductRest(id);
-      if (data.error === 0) {
-        setProductsState(prev => {
-          console.log(data);
-          const newProducts = prev.products.filter(product => product.id !== data.data.id);
-          return {
-            ...prev,
-            products: newProducts
-          };
-        });
-      } else {
-        console.log('Error ->', data)
-      }
+      setProductsState(prev => {
+        const newProducts = prev.products.filter(product => product._id !== data.product._id);
+        return {
+          ...prev,
+          products: newProducts
+        };
+      });
     } catch (error) {
+      console.error(error)
     }
   }
 
-  if(productsState.loading) {
+  if (productsState.loading) {
     return <h2>Cargando...</h2>
   }
 
-  const {products} = productsState 
+  const { products } = productsState
 
-  if(!products || !products.length) {
+  if (!products || !products.length) {
     return <h2>No hay productos disponibles</h2>
   }
 
@@ -74,14 +60,14 @@ const Products = () => {
     <ProductsStyles>
       <div className="products--list">
         {products.map(product => (
-          <Product 
-            key={product.id} 
-            product={product} 
-            handleProductEdit={handleProductEdit} 
+          <Product
+            key={product._id}
+            product={product}
+            handleProductEdit={handleProductEdit}
             handleProductDelete={handleProductDelete}
           />
         ))}
-        {}
+        { }
       </div>
     </ProductsStyles>
   )

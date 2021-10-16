@@ -19,6 +19,9 @@ const GlobalStyles = createGlobalStyle`
     line-height: 2;
     font-family: 'Nunito Sans', sans-serif;
   }
+  a {
+    text-decoration: none;
+  }
   button {
     font-family: 'Nunito Sans', sans-serif;
     cursor: pointer;

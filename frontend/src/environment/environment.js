@@ -1,5 +1,6 @@
 const environment = {
-  api: 'http://localhost:8080'
-}
+  api: process.env.REACT_APP_API_URL || 'http://localhost:8080',
+  admin: false,
+};
 
 export default environment;
