@@ -1,77 +1,114 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { addToCartRest } from '../services/CartRest';
 import { deleteProductRest, getProductsRest } from '../services/ProductsRest';
+import AddToCartModal from './AddToCartModal';
 import Product from './Product';
 
 const Products = () => {
-  const [productsState, setProductsState] = useState({ products: [], loading: true });
+  const [productsState, setProductsState] = useState({
+    products: [],
+    loading: true,
+  });
+  const [cartModal, setCartModal] = useState({
+    isOpen: false,
+    productId: null,
+  });
 
   useEffect(() => {
     getProducts();
-  }, [])
+  }, []);
 
   const getProducts = async () => {
     try {
       const data = await getProductsRest();
       setProductsState({
         products: data.products,
-        loading: false
+        loading: false,
       });
     } catch (error) {
       setProductsState({
         products: [],
-        loading: false
+        loading: false,
       });
       console.error(error);
     }
-  }
+  };
 
   const handleProductEdit = (id) => {
     console.log(`editting ${id}`);
-  }
+  };
 
   const handleProductDelete = async (id) => {
     if (!id) return;
     try {
       const data = await deleteProductRest(id);
-      setProductsState(prev => {
-        const newProducts = prev.products.filter(product => product._id !== data.product._id);
+      setProductsState((prev) => {
+        const newProducts = prev.products.filter(
+          (product) => product._id !== data.product._id
+        );
         return {
           ...prev,
-          products: newProducts
+          products: newProducts,
         };
       });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
+
+  const handleAddProductToCart = async (id, quantity) => {
+    if (quantity <= 0 || !id) return;
+    setCartModal({
+      productId: null,
+      isOpen: false,
+    });
+    try {
+      await addToCartRest(id, quantity);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const openCartModal = (productId) => {
+    setCartModal({
+      isOpen: true,
+      productId,
+    });
+  };
 
   if (productsState.loading) {
-    return <h2>Cargando...</h2>
+    return <h2>Cargando...</h2>;
   }
 
-  const { products } = productsState
+  const { products } = productsState;
 
   if (!products || !products.length) {
-    return <h2>No hay productos disponibles</h2>
+    return <h2>No hay productos disponibles</h2>;
   }
 
   return (
     <ProductsStyles>
       <div className="products--list">
-        {products.map(product => (
+        {products.map((product) => (
           <Product
             key={product._id}
             product={product}
             handleProductEdit={handleProductEdit}
             handleProductDelete={handleProductDelete}
+            handleAddProductToCart={openCartModal}
           />
         ))}
-        { }
+        <AddToCartModal
+          isOpen={cartModal.isOpen}
+          productId={cartModal.productId}
+          onClose={() => setCartModal((prev) => ({ ...prev, isOpen: false }))}
+          onSubmit={handleAddProductToCart}
+        ></AddToCartModal>
       </div>
     </ProductsStyles>
-  )
-}
+  );
+};
 
 export default Products;
 

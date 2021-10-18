@@ -14,6 +14,17 @@ const getProductsRest = () => {
   })
 }
 
+const getProductRest = (id) => {
+  return new Promise((resolve, reject) => {
+    axios.get(`${baseUrl}/productos/listar/${id}`).then(async resp => {
+      resolve(resp.data);
+    }).catch(error => {
+      console.error(error.response.data);
+      reject(error.response.data);
+    });
+  })
+}
+
 const deleteProductRest = (id) => {
   const url = `${baseUrl}/productos/borrar/${String(id)}`;
   return new Promise((resolve, reject) => {
@@ -28,5 +39,6 @@ const deleteProductRest = (id) => {
 
 export {
   getProductsRest,
-  deleteProductRest
+  deleteProductRest,
+  getProductRest
 }

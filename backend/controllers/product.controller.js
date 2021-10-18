@@ -1,4 +1,5 @@
 import logger from '../lib/logger.js';
+import CartItem from '../models/CartItem.js';
 import Product from '../models/Product.js';
 
 export async function getProducts(req, res) {
@@ -102,6 +103,12 @@ export async function deleteProduct(req, res) {
         .status(400)
         .json({ error_description: 'Producto no encontrado.' });
     }
+
+    // Saco el producto borrado de todos los carritos que lo contengan
+    await CartItem.deleteMany({
+      product: { _id: req.params.id },
+    });
+
     res.json({ product });
   } catch (error) {
     logger.error(`Error al borrar producto. ${error}`);

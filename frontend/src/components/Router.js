@@ -7,6 +7,7 @@ import ProtectedNotAuthRoute from './ProtectedNotAuthRoute';
 import ProtectedAuthRoute from './ProtectedAuthRoute';
 import Cart from './Cart';
 import Signup from './Signup';
+import ProductDetail from './ProductDetail';
 
 const Router = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const Router = () => (
     <ContainerStyles>
       <Switch>
         <Route exact path="/" component={Products} />
+        <Route exact path="/products/:id" component={ProductDetail} />
         <ProtectedNotAuthRoute path="/login" component={Login} />
         <ProtectedNotAuthRoute path="/signup" component={Signup} />
         <ProtectedAuthRoute path="/cart" component={Cart} />

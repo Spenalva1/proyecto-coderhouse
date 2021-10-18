@@ -2,3 +2,17 @@
 {"message":"Error al enviar sms al comprador. Error: The 'To' number 01166400929 is not a valid phone number..","level":"error"}
 {"message":"Error al enviar mail de sunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com.","level":"error"}
 {"message":"Error al enviar sms al comprador. Error: The 'To' number 01166400929 is not a valid phone number..","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: hola is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: Cannot access 'quantity' before initialization","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: newCartItem is not defined","level":"error"}
+{"message":"Error al agregar producto al carrito. ReferenceError: cartitem is not defined","level":"error"}
+{"message":"Error al enviar sms al comprador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar whatsapp al administrador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar sms al comprador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar whatsapp al administrador. Error: Authenticate.","level":"error"}

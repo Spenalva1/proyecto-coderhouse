@@ -4,6 +4,7 @@ import {
   createCartItem,
   deleteCartItem,
   getCartItems,
+  updateCartItem,
 } from '../controllers/cart.controller.js';
 import { isValidMongoId } from '../middlewares/isValidMongoId.js';
 import { passportAuth } from '../middlewares/passport.js';
@@ -13,6 +14,13 @@ const routerCart = express.Router();
 routerCart.get('/listar', passportAuth(), getCartItems);
 
 routerCart.post('/agregar/:id', passportAuth(), isValidMongoId, createCartItem);
+
+routerCart.put(
+  '/actualizar/:id',
+  passportAuth(),
+  isValidMongoId,
+  updateCartItem
+);
 
 routerCart.delete(
   '/borrar/:id',

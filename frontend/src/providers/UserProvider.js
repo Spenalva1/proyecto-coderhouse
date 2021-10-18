@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import {
   createContext,
@@ -8,7 +7,11 @@ import {
   useState,
 } from 'react';
 import environment from '../environment/environment';
-import { deleteToken, getToken, setToken as setLocalToken } from '../lib/localToken';
+import {
+  deleteToken,
+  getToken,
+  setToken as setLocalToken,
+} from '../lib/localToken';
 
 const LocalStateContext = createContext({});
 const LocalStateProvider = LocalStateContext.Provider;
@@ -21,13 +24,12 @@ const UserProvider = ({ children }) => {
     return getToken();
   });
 
-
   const getUsuario = useCallback(async () => {
     try {
       const userResponse = await axios.get(`${baseUrl}/user`);
       setUser(userResponse.data.user);
     } catch (error) {
-      console.log({ error });
+      console.error({ error });
       setUser(null);
     }
   }, []);
@@ -40,7 +42,10 @@ const UserProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const loginResponse = await axios.post(`${baseUrl}/login`, { email, password });
+      const loginResponse = await axios.post(`${baseUrl}/login`, {
+        email,
+        password,
+      });
       setLocalToken(loginResponse.data.token);
       setToken(loginResponse.data.token);
       const userResponse = await axios.get(`${baseUrl}/user`);
@@ -48,36 +53,36 @@ const UserProvider = ({ children }) => {
     } catch (error) {
       throw error.response.data;
     }
-  }
+  };
 
   const signup = async (inputs) => {
     try {
       const formData = new FormData();
       Object.entries(inputs).forEach(([key, value]) => {
-        formData.append(key, value)
+        formData.append(key, value);
       });
       await axios.post(`${baseUrl}/signup`, formData);
     } catch (error) {
       throw error.response.data;
     }
-  }
+  };
 
   const logout = async () => {
     deleteToken();
     setToken(null);
     setUser(null);
-  }
+  };
 
   return (
-    <LocalStateProvider value={{ token, user, login, logout, signup }}>{children}</LocalStateProvider>
+    <LocalStateProvider value={{ token, user, login, logout, signup }}>
+      {children}
+    </LocalStateProvider>
   );
 };
 
-// make a custom hook for accessing the filter local state
 const useUser = () => {
   const all = useContext(LocalStateContext);
   return all;
 };
 
 export { UserProvider, useUser };
-

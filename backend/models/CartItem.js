@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const cartsSchema = mongoose.Schema({
   user: { type: mongoose.Schema.ObjectId, ref: 'User' },
   product: { type: mongoose.Schema.ObjectId, ref: 'Product' },
+  quantity: { type: Number, require: true, default: 1 },
   timestamp: { type: String, require: true, max: 50 },
 });
 
