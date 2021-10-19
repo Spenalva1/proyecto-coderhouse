@@ -21,7 +21,7 @@ export async function getProduct(req, res) {
         .status(400)
         .json({ error_description: 'Producto no encontrado.' });
 
-    res.json({ product });
+    res.json(product);
   } catch (error) {
     logger.error(`Error al obtener producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -53,7 +53,7 @@ export async function createProduct(req, res) {
       stock,
     });
 
-    return res.status(201).json({ product: newProduct });
+    return res.status(201).json(newProduct);
   } catch (error) {
     logger.error(`Error al crear producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -84,7 +84,7 @@ export async function updateProduct(req, res) {
         _id: id,
         ...updatedProduct,
       };
-      return res.status(201).json({ product });
+      return res.status(201).json(product);
     }
     return res
       .status(400)
@@ -109,7 +109,7 @@ export async function deleteProduct(req, res) {
       product: { _id: req.params.id },
     });
 
-    res.json({ product });
+    res.json(product);
   } catch (error) {
     logger.error(`Error al borrar producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });

@@ -6,7 +6,7 @@ const baseUrl = environment.api;
 export const addToCartRest = (productId, quantity = 0) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${baseUrl}/carrito/agregar/${productId}`, { quantity })
+      .post(`${baseUrl}/carrito/${productId}`, { quantity })
       .then(async (resp) => {
         resolve(resp.data);
       })
@@ -20,7 +20,7 @@ export const addToCartRest = (productId, quantity = 0) => {
 export const getCartRest = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${baseUrl}/carrito/listar`)
+      .get(`${baseUrl}/carrito`)
       .then(async (resp) => {
         resolve(resp.data);
       })
@@ -48,7 +48,7 @@ export const checkoutRest = () => {
 export const deleteCartItemRest = (productId) => {
   return new Promise((resolve, reject) => {
     axios
-      .delete(`${baseUrl}/carrito/borrar/${productId}`)
+      .delete(`${baseUrl}/carrito/${productId}`)
       .then(async (resp) => {
         resolve(resp.data);
       })
@@ -62,7 +62,7 @@ export const deleteCartItemRest = (productId) => {
 export const updateCartItemRest = (productId, quantity) => {
   return new Promise((resolve, reject) => {
     axios
-      .put(`${baseUrl}/carrito/actualizar/${productId}`, { quantity })
+      .put(`${baseUrl}/carrito/${productId}`, { quantity })
       .then(async (resp) => {
         resolve(resp.data);
       })

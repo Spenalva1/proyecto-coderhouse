@@ -11,14 +11,14 @@ import { isValidMongoId } from '../middlewares/isValidMongoId.js';
 
 const routerProducts = express.Router();
 
-routerProducts.get('/listar', getProducts);
+routerProducts.get('/', getProducts);
 
-routerProducts.get('/listar/:id', isValidMongoId, getProduct);
+routerProducts.get('/:id', isValidMongoId, getProduct);
 
-routerProducts.post('/agregar', isAdmin, isValidMongoId, createProduct);
+routerProducts.post('/', isAdmin, isValidMongoId, createProduct);
 
-routerProducts.put('/actualizar/:id', isAdmin, isValidMongoId, updateProduct);
+routerProducts.put('/:id', isAdmin, isValidMongoId, updateProduct);
 
-routerProducts.delete('/borrar/:id', isAdmin, isValidMongoId, deleteProduct);
+routerProducts.delete('/:id', isAdmin, isValidMongoId, deleteProduct);
 
 export default routerProducts;

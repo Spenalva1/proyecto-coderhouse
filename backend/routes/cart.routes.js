@@ -11,23 +11,13 @@ import { passportAuth } from '../middlewares/passport.js';
 
 const routerCart = express.Router();
 
-routerCart.get('/listar', passportAuth(), getCartItems);
+routerCart.get('/', passportAuth(), getCartItems);
 
-routerCart.post('/agregar/:id', passportAuth(), isValidMongoId, createCartItem);
+routerCart.post('/:id', passportAuth(), isValidMongoId, createCartItem);
 
-routerCart.put(
-  '/actualizar/:id',
-  passportAuth(),
-  isValidMongoId,
-  updateCartItem
-);
+routerCart.put('/:id', passportAuth(), isValidMongoId, updateCartItem);
 
-routerCart.delete(
-  '/borrar/:id',
-  passportAuth(),
-  isValidMongoId,
-  deleteCartItem
-);
+routerCart.delete('/:id', passportAuth(), isValidMongoId, deleteCartItem);
 
 routerCart.post('/checkout', passportAuth(), checkout);
 

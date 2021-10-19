@@ -10,12 +10,12 @@ import multerMiddleware from '../middlewares/multer.js';
 
 const routerUser = express.Router();
 
-routerUser.post('/signup', multerMiddleware.single('photo'), signup);
-
-routerUser.post('/login', login);
+routerUser.post('/token', login);
 
 routerUser.get('/unauthorized', unauthorized);
 
 routerUser.get('/user', passportAuth(), getUsuario);
+
+routerUser.post('/user', multerMiddleware.single('photo'), signup);
 
 export default routerUser;

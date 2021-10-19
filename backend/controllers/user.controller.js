@@ -7,7 +7,7 @@ export async function getUsuario(req, res) {
   try {
     const user = await User.findById(req.user.id);
     const userJson = user.toObject({ virtuals: true });
-    res.json({ user: userJson });
+    res.json(userJson);
   } catch (error) {
     logger.error(`Error al obtener usuario. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -47,14 +47,14 @@ export async function signup(req, res) {
       password,
       phone,
       address,
-      photo: req.file.filename,
+      photo: req.file?.filename ?? 'default.jpg',
     });
     await newUser.save();
     const newUserDoc = newUser._doc;
     delete newUserDoc.password;
     sendEmail(signupInfo(newUserDoc), 'Nuevo registro');
     logger.info('Nuevo usuario registrado.');
-    return res.status(201).json({ user: newUserDoc });
+    return res.status(201).json(newUserDoc);
   } catch (error) {
     logger.error(`Error al registrar usuario. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });

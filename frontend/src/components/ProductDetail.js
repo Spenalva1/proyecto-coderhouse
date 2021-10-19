@@ -17,7 +17,7 @@ const ProductDetail = () => {
   const getProduct = useCallback(async () => {
     try {
       const data = await getProductRest(id);
-      setProduct(data.product);
+      setProduct(data);
     } catch (error) {
       setError(error.error_description);
       console.error(error);

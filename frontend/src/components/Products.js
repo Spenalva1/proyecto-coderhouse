@@ -45,7 +45,7 @@ const Products = () => {
       const data = await deleteProductRest(id);
       setProductsState((prev) => {
         const newProducts = prev.products.filter(
-          (product) => product._id !== data.product._id
+          (product) => product._id !== data._id
         );
         return {
           ...prev,

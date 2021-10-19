@@ -27,9 +27,11 @@ const UserProvider = ({ children }) => {
   const getUsuario = useCallback(async () => {
     try {
       const userResponse = await axios.get(`${baseUrl}/user`);
-      setUser(userResponse.data.user);
+      setUser(userResponse.data);
     } catch (error) {
       console.error({ error });
+      deleteToken();
+      setToken(null);
       setUser(null);
     }
   }, []);
@@ -42,14 +44,14 @@ const UserProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const loginResponse = await axios.post(`${baseUrl}/login`, {
+      const loginResponse = await axios.post(`${baseUrl}/token`, {
         email,
         password,
       });
       setLocalToken(loginResponse.data.token);
       setToken(loginResponse.data.token);
       const userResponse = await axios.get(`${baseUrl}/user`);
-      setUser(userResponse.data.user);
+      setUser(userResponse.data);
     } catch (error) {
       throw error.response.data;
     }
@@ -61,7 +63,7 @@ const UserProvider = ({ children }) => {
       Object.entries(inputs).forEach(([key, value]) => {
         formData.append(key, value);
       });
-      await axios.post(`${baseUrl}/signup`, formData);
+      await axios.post(`${baseUrl}/user`, formData);
     } catch (error) {
       throw error.response.data;
     }
