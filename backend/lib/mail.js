@@ -1,12 +1,13 @@
 import nodemailer from 'nodemailer';
+import config from '../config/config.js';
 import logger from './logger.js';
 
 const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_ETH_HOST,
-  port: process.env.MAIL_ETH_PORT,
+  host: config.MAIL_ETH_HOST,
+  port: config.MAIL_ETH_PORT,
   auth: {
-    user: process.env.MAIL_ETH_USER,
-    pass: process.env.MAIL_ETH_PASS,
+    user: config.MAIL_ETH_USER,
+    pass: config.MAIL_ETH_PASS,
   },
 });
 
@@ -42,11 +43,11 @@ const formatedEmail = (html) => `
   </div>
 `;
 
-export async function sendEmail(text, subject, to = process.env.ADMIN_EMAIL) {
+export async function sendEmail(text, subject, to = config.ADMIN_EMAIL) {
   try {
     await transporter.sendMail({
       to,
-      from: process.env.MAIL_ETH_USER,
+      from: config.MAIL_ETH_USER,
       subject,
       html: formatedEmail(text),
     });

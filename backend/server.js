@@ -1,7 +1,7 @@
-import 'dotenv/config';
 import passport from 'passport';
 import express from 'express';
 import cors from 'cors';
+import config from './config/config.js';
 import passportMiddleware from './middlewares/passport.js';
 import routerProduct from './routes/product.routes.js';
 import routerUser from './routes/user.routes.js';
@@ -33,7 +33,7 @@ app.get('*', (req, res) =>
   })
 );
 
-const server = app.listen(process.env.PORT || 8080, () => {
+const server = app.listen(config.PORT || 8080, () => {
   logger.info(`Servidor inicializado en el puerto ${server.address().port}.`);
 });
 

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import config from '../config/config.js';
 import logger from '../lib/logger.js';
 import { sendEmail, signupInfo } from '../lib/mail.js';
 import User from '../models/User.js';
@@ -86,7 +87,7 @@ export async function login(req, res) {
 }
 
 function createToken({ email, _id }) {
-  return jwt.sign({ email, _id }, process.env.JWT_SECRET, { expiresIn: '15h' });
+  return jwt.sign({ email, _id }, config.JWT_SECRET, { expiresIn: '15h' });
 }
 
 export async function unauthorized(req, res) {

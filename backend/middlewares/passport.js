@@ -1,12 +1,13 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import passport from 'passport';
+import config from '../config/config.js';
 import User from '../models/User.js';
 import logger from '../lib/logger.js';
 
 export default new Strategy(
   {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET || 'secretoparajwt123321',
+    secretOrKey: config.JWT_SECRET || 'secretoparajwt123321',
   },
   async (payload, done) => {
     try {
