@@ -11,11 +11,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-console.log({
-  MAIL_GMAIL_USER: config.MAIL_GMAIL_USER,
-  MAIL_GMAIL_PASS: config.MAIL_GMAIL_PASS,
-});
-
 const gmailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
