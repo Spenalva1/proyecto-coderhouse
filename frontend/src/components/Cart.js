@@ -3,11 +3,11 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 import {
-  checkoutRest,
   deleteCartItemRest,
   getCartRest,
   updateCartItemRest,
 } from '../services/CartRest';
+import { checkoutRest } from '../services/OrderRest';
 import AddToCartModal from './AddToCartModal';
 
 const Cart = () => {

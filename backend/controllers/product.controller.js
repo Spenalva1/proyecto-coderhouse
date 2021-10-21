@@ -4,7 +4,7 @@ import Product from '../models/Product.js';
 
 export async function getProducts(req, res) {
   try {
-    const products = await Product.find({});
+    const products = await Product.find().sort({ _id: -1 });
     res.json({ products });
   } catch (error) {
     logger.error(`Error al listar productos. ${error}`);

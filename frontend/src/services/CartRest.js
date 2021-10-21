@@ -11,7 +11,6 @@ export const addToCartRest = (productId, quantity = 0) => {
         resolve(resp.data);
       })
       .catch((error) => {
-        console.error(error.response.data);
         reject(error.response.data);
       });
   });
@@ -25,21 +24,6 @@ export const getCartRest = () => {
         resolve(resp.data);
       })
       .catch((error) => {
-        console.error(error.response.data);
-        reject(error.response.data);
-      });
-  });
-};
-
-export const checkoutRest = () => {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(`${baseUrl}/carrito/checkout`)
-      .then(async (resp) => {
-        resolve(resp.data);
-      })
-      .catch((error) => {
-        console.error(error.response.data);
         reject(error.response.data);
       });
   });
@@ -53,7 +37,6 @@ export const deleteCartItemRest = (productId) => {
         resolve(resp.data);
       })
       .catch((error) => {
-        console.error(error.response.data);
         reject(error.response.data);
       });
   });
@@ -67,7 +50,6 @@ export const updateCartItemRest = (productId, quantity) => {
         resolve(resp.data);
       })
       .catch((error) => {
-        console.error(error.response.data);
         reject(error.response.data);
       });
   });

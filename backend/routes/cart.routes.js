@@ -1,6 +1,5 @@
 import express from 'express';
 import {
-  checkout,
   createCartItem,
   deleteCartItem,
   getCartItems,
@@ -18,7 +17,5 @@ routerCart.post('/:id', passportAuth(), isValidMongoId, createCartItem);
 routerCart.put('/:id', passportAuth(), isValidMongoId, updateCartItem);
 
 routerCart.delete('/:id', passportAuth(), isValidMongoId, deleteCartItem);
-
-routerCart.post('/checkout', passportAuth(), checkout);
 
 export default routerCart;

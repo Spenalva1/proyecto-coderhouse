@@ -1,9 +1,5 @@
 import logger from '../lib/logger.js';
-import { checkoutInfo, sendEmail } from '../lib/mail.js';
-import { sendSms, sendWhatsapp } from '../lib/messaging.js';
 import CartItem from '../models/CartItem.js';
-import Order from '../models/Order.js';
-import OrderItem from '../models/OrderItem.js';
 import Product from '../models/Product.js';
 
 export async function getCartItems(req, res) {
@@ -90,60 +86,6 @@ export async function deleteCartItem(req, res) {
     res.json({ cartItem });
   } catch (error) {
     logger.error(`Error al borrar producto del carrito. ${error}`);
-    return res.status(500).json({ error_description: 'Error del servidor.' });
-  }
-}
-
-export async function checkout(req, res) {
-  try {
-    const { firstName, lastName, email, cart, phone } = req.user;
-    const name = `${firstName} ${lastName}`;
-    const products = cart.map((cartItem) => cartItem.product.name);
-    if (!products || products?.length <= 0) {
-      return res
-        .status(400)
-        .json({ error_description: 'No hay productos en el carrito.' });
-    }
-
-    let total = 0;
-    const orderItems = cart.map(({ product, quantity }) => {
-      total += product.price * quantity;
-      return {
-        name: product.name,
-        description: product.description,
-        photo: product.photo,
-        price: product.price,
-        quantity,
-      };
-    });
-
-    const orderItemsDoc = await OrderItem.create(orderItems);
-
-    console.log('orderItemsDoc', orderItemsDoc);
-    console.log(
-      'orderItemsDoc ids',
-      orderItemsDoc.map((oi) => oi._id)
-    );
-
-    const order = new Order({
-      orderNumber: await Order.count(),
-      products: orderItemsDoc.map((oi) => oi._id),
-      total,
-      userEmail: req.user.email,
-    });
-    await order.save();
-
-    // sendEmail(
-    //   checkoutInfo(name, email, products),
-    //   `Nuevo pedido de ${name} - ${email}`
-    // );
-    // sendWhatsapp(`Nuevo pedido de ${name} - ${email}`);
-    // sendSms(phone, `Su pedido ha sido recibido y se encuentra en progreso`);
-    await CartItem.deleteMany({ user: req.user.id });
-    res.json(order);
-  } catch (error) {
-    logger.error(`Error en el checkout. ${error}`);
-    console.error(error);
     return res.status(500).json({ error_description: 'Error del servidor.' });
   }
 }

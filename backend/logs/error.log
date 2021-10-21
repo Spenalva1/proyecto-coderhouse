@@ -24,3 +24,13 @@
 {"message":"Error en el checkout. ValidationError: orderNumber: Cast to ObjectId failed for value \"0\" (type number) at path \"orderNumber\"","level":"error"}
 {"message":"Error en el checkout. ValidationError: orderNumber: Cast to ObjectId failed for value \"0\" (type number) at path \"orderNumber\"","level":"error"}
 {"message":"Error al registrar usuario. TypeError: Cannot read property 'filename' of undefined","level":"error"}
+{"message":"Error en el checkout. ReferenceError: OrderItem is not defined","level":"error"}
+{"message":"Error en el checkout. ReferenceError: OrderItem is not defined","level":"error"}
+{"message":"Error en el checkout. ReferenceError: CartItem is not defined","level":"error"}
+{"message":"Error al enviar sms al comprador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar whatsapp al administrador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar sms al comprador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar whatsapp al administrador. Error: Authenticate.","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d4sm2483893vkq.54 - gsmtp","level":"error"}

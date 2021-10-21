@@ -16,6 +16,8 @@ const config = {
   TWILIO_TOKEN: process.env.TWILIO_TOKEN,
   TWILIO_NUMBER: process.env.TWILIO_NUMBER,
   TWILIO_WHATSAPP: process.env.TWILIO_WHATSAPP,
+  MAIL_GMAIL_USER: process.env.MAIL_GMAIL_USER,
+  MAIL_GMAIL_PASS: process.env.MAIL_GMAIL_PASS,
 };
 
 export default config;

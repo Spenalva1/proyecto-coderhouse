@@ -3,9 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import config from './config/config.js';
 import passportMiddleware from './middlewares/passport.js';
-import routerProduct from './routes/product.routes.js';
-import routerUser from './routes/user.routes.js';
-import routerCart from './routes/cart.routes.js';
+import routers from './routes/index.js';
 import './db/db.js';
 import logger from './lib/logger.js';
 
@@ -24,9 +22,10 @@ app.use(passport.initialize());
 passport.use(passportMiddleware);
 
 // ROUTES
-app.use('/productos', routerProduct);
-app.use('/', routerUser);
-app.use('/carrito', routerCart);
+app.use('/productos', routers.products);
+app.use('/', routers.user);
+app.use('/carrito', routers.cart);
+app.use('/ordenes', routers.order);
 app.get('*', (req, res) =>
   res.status(400).json({
     error_description: `ruta ${req.originalUrl} método get no implementado`,

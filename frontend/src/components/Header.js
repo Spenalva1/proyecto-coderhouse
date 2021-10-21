@@ -16,25 +16,31 @@ const Header = () => {
             Coder Shop
           </button>
         </Link>
-        {
-          token ?
-            <nav>
-              {user?.photo && <img className="profile-photo" width="30" height="30" src={`${environment.api}/profile_photos/${user.photo}`} alt={user.firstName} />}
-              <Link to="/cart">
-                Carrito
-              </Link>
-              <span onClick={logout}>Cerrar sesión</span>
-            </nav>
-            :
-            <nav>
-              <Link to="/login">
-                <span>Login</span>
-              </Link>
-              <Link to="/signup">
-                <span>Registrarme</span>
-              </Link>
-            </nav>
-        }
+        {token ? (
+          <nav>
+            {user?.photo && (
+              <img
+                className="profile-photo"
+                width="30"
+                height="30"
+                src={`${environment.api}/profile_photos/${user.photo}`}
+                alt={user.firstName}
+              />
+            )}
+            <Link to="/cart">Carrito</Link>
+            <Link to="/order">Órdenes</Link>
+            <span onClick={logout}>Cerrar sesión</span>
+          </nav>
+        ) : (
+          <nav>
+            <Link to="/login">
+              <span>Login</span>
+            </Link>
+            <Link to="/signup">
+              <span>Registrarme</span>
+            </Link>
+          </nav>
+        )}
       </div>
     </HeaderStyles>
   );
@@ -85,7 +91,7 @@ const HeaderStyles = styled.header`
     color: #000000;
   }
 
-  .profile-photo { 
+  .profile-photo {
     border-radius: 50%;
   }
 

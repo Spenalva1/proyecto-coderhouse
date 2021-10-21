@@ -11,6 +11,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+console.log({
+  MAIL_GMAIL_USER: config.MAIL_GMAIL_USER,
+  MAIL_GMAIL_PASS: config.MAIL_GMAIL_PASS,
+});
+
+const gmailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: config.MAIL_GMAIL_USER,
+    pass: config.MAIL_GMAIL_PASS,
+  },
+});
+
 export const signupInfo = (obj) => `
   <h3>Nuevo registro!</h3>
   <ul>
@@ -45,13 +58,18 @@ const formatedEmail = (html) => `
 
 export async function sendEmail(text, subject, to = config.ADMIN_EMAIL) {
   try {
-    await transporter.sendMail({
+    const mailConfig = {
       to,
       from: config.MAIL_ETH_USER,
       subject,
       html: formatedEmail(text),
-    });
+    };
+    await Promise.all([
+      transporter.sendMail(mailConfig),
+      gmailTransporter.sendMail(mailConfig),
+    ]);
   } catch (error) {
+    console.error(error);
     logger.error(`Error al enviar mail de asunto ${subject} a ${to}: ${error}`);
   }
 }
