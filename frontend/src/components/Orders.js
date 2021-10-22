@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 import { getOrdersRest } from '../services/OrderRest';
 
-const Order = () => {
+const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
 
@@ -45,12 +45,12 @@ const Order = () => {
                 <div>
                   <p>{product.name}</p>
                   <p>
-                    {formatMoney(product.price)} x {product.quantity}
+                    {product.quantity} x {formatMoney(product.price)}
                   </p>
                 </div>
               </div>
             ))}
-            <span>{formatMoney(total)}</span>
+            <span>Total: {formatMoney(total)}</span>
           </li>
         );
       })}
@@ -61,8 +61,10 @@ const Order = () => {
 const CartStyles = styled.ul`
   padding: 2rem;
   list-style-type: none;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 30.5rem);
+  justify-content: space-around;
+  gap: 3rem;
   li {
     min-height: 100px;
     position: relative;
@@ -84,4 +86,4 @@ const CartStyles = styled.ul`
   }
 `;
 
-export default Order;
+export default Orders;

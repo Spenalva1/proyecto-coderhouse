@@ -1,12 +1,26 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import environment from '../environment/environment';
 import { useUser } from '../providers/UserProvider';
 
 const Header = () => {
   const { logout, user, token } = useUser();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast(`Hasta luego ${user?.firstName || ''}`, {
+        type: 'info',
+        autoClose: 2000,
+        position: 'top-center',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <HeaderStyles>
@@ -29,7 +43,7 @@ const Header = () => {
             )}
             <Link to="/cart">Carrito</Link>
             <Link to="/order">Órdenes</Link>
-            <span onClick={logout}>Cerrar sesión</span>
+            <span onClick={handleLogout}>Cerrar sesión</span>
           </nav>
         ) : (
           <nav>

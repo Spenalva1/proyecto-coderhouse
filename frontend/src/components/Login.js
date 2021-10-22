@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { useUser } from '../providers/UserProvider';
 
 export const Login = () => {
   const [error, setError] = useState('');
-  const { login } = useUser();
+  const { login, user } = useUser();
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -14,15 +15,25 @@ export const Login = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     try {
-      await login(email, password);
+      const user = await login(email, password);
+      toast(`Bienvenido ${user?.firstName || ''}`, {
+        type: 'success',
+        autoClose: 2000,
+        position: 'top-center',
+      });
     } catch (error) {
       setError(error.error_description || 'Error al conectarse al servidor.');
+      toast(error.error_description || 'Error al conectarse al servidor.', {
+        type: 'error',
+        autoClose: 2000,
+        position: 'top-center',
+      });
     }
-  }
+  };
 
   return (
     <LoginFormStyles onSubmit={onSubmit}>
-      {error && <p>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <h3>LOGIN</h3>
       <div>
         <label htmlFor="email">Email:</label>
@@ -30,13 +41,21 @@ export const Login = () => {
       </div>
       <div>
         <label htmlFor="password">Contraseña:</label>
-        <input required ref={passwordRef} type="password" name="password" id="password" />
+        <input
+          required
+          ref={passwordRef}
+          type="password"
+          name="password"
+          id="password"
+        />
       </div>
       <button type="submit">Login</button>
-      <p>No tienes una cuenta? <Link to="/signup">Registrate</Link></p>
+      <p>
+        No tienes una cuenta? <Link to="/signup">Registrate</Link>
+      </p>
     </LoginFormStyles>
-  )
-}
+  );
+};
 
 const LoginFormStyles = styled.form`
   a {

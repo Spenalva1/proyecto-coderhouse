@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { addToCartRest } from '../services/CartRest';
 import { deleteProductRest, getProductsRest } from '../services/ProductsRest';
@@ -43,6 +44,11 @@ const Products = () => {
     if (!id) return;
     try {
       const data = await deleteProductRest(id);
+      toast('Producto borrado.', {
+        type: 'error',
+        autoClose: 2000,
+        position: 'top-center',
+      });
       setProductsState((prev) => {
         const newProducts = prev.products.filter(
           (product) => product._id !== data._id
@@ -65,6 +71,11 @@ const Products = () => {
     });
     try {
       await addToCartRest(id, quantity);
+      toast('Producto añadido al carrito.', {
+        type: 'success',
+        autoClose: 2000,
+        position: 'top-center',
+      });
     } catch (error) {
       console.error(error);
     }

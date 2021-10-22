@@ -52,6 +52,7 @@ const UserProvider = ({ children }) => {
       setToken(loginResponse.data.token);
       const userResponse = await axios.get(`${baseUrl}/user`);
       setUser(userResponse.data);
+      return userResponse.data;
     } catch (error) {
       throw error.response.data;
     }

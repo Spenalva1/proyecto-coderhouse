@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
 import {
@@ -43,7 +44,12 @@ const Cart = () => {
   const onCheckout = async () => {
     try {
       await checkoutRest();
-      history.push(`/`);
+      toast('Compra realizada', {
+        type: 'success',
+        autoClose: 2000,
+        position: 'top-center',
+      });
+      history.push(`/order`);
     } catch (error) {
       console.error(error);
     }
@@ -53,6 +59,11 @@ const Cart = () => {
     try {
       await deleteCartItemRest(id);
       setCart((prev) => prev.filter((cartItem) => cartItem._id !== id));
+      toast('Producto eliminado del carrito', {
+        type: 'error',
+        autoClose: 2000,
+        position: 'top-center',
+      });
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +81,11 @@ const Cart = () => {
           return cartItem;
         })
       );
+      toast('Cantidad del producto actualizada', {
+        type: 'info',
+        autoClose: 2000,
+        position: 'top-center',
+      });
       setCartModal({
         productId: null,
         isOpen: false,

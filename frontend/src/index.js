@@ -7,6 +7,8 @@ import { getToken } from './lib/localToken';
 import { UserProvider } from './providers/UserProvider';
 import reportWebVitals from './reportWebVitals';
 import dotenv from 'dotenv';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 dotenv.config();
 
 axios.interceptors.request.use(
@@ -29,6 +31,7 @@ ReactDOM.render(
     <UserProvider>
       <Router />
     </UserProvider>
+    <ToastContainer />
   </React.StrictMode>,
   document.getElementById('root')
 );

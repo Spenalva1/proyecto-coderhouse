@@ -8,7 +8,7 @@ import ProtectedAuthRoute from './ProtectedAuthRoute';
 import Cart from './Cart';
 import Signup from './Signup';
 import ProductDetail from './ProductDetail';
-import Order from './Order';
+import Orders from './Orders';
 
 const Router = () => (
   <BrowserRouter>
@@ -20,7 +20,7 @@ const Router = () => (
         <ProtectedNotAuthRoute path="/login" component={Login} />
         <ProtectedNotAuthRoute path="/signup" component={Signup} />
         <ProtectedAuthRoute path="/cart" component={Cart} />
-        <ProtectedAuthRoute path="/order" component={Order} />
+        <ProtectedAuthRoute path="/order" component={Orders} />
         <Route component={Products} />
       </Switch>
     </ContainerStyles>

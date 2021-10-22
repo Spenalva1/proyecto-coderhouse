@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { toast } from 'react-toastify';
 import formatMoney from '../lib/formatMoney';
 import isAdmin from '../lib/isAdmin';
 import { addToCartRest } from '../services/CartRest';
@@ -32,6 +33,11 @@ const ProductDetail = () => {
     if (!id) return;
     try {
       await deleteProductRest(id);
+      toast('Producto borrado.', {
+        type: 'error',
+        autoClose: 2000,
+        position: 'top-center',
+      });
       history.replace('/');
     } catch (error) {
       setError(`Error al borrar producto (${error.error_description}).`);
@@ -42,6 +48,11 @@ const ProductDetail = () => {
   const handleAddToCart = async (id, quantity) => {
     try {
       await addToCartRest(id, quantity);
+      toast('Producto añadido al carrito.', {
+        type: 'success',
+        autoClose: 2000,
+        position: 'top-center',
+      });
       history.push('/cart');
     } catch (error) {
       setError(
