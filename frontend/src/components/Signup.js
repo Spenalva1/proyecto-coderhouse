@@ -93,7 +93,7 @@ export const Signup = () => {
           required
           onChange={handleChange}
           value={inputs.password}
-          type="text"
+          type="password"
           name="password"
           id="password"
         />
@@ -104,7 +104,7 @@ export const Signup = () => {
           required
           onChange={handleChange}
           value={inputs.repassword}
-          type="text"
+          type="password"
           name="repassword"
           id="password"
         />
