@@ -8,12 +8,12 @@ const Product = ({ product, handleAddProductToCart, handleProductDelete }) => {
   const { user } = useUser();
 
   const handleClick = () => {
-    history.push(`/${product._id}`);
+    history.push(`product/${product._id}`);
   };
 
   const handleEdit = (e, id) => {
     e.stopPropagation();
-    history.push(`product/update/${product._id}`);
+    history.push(`/product/update/${product._id}`);
   };
 
   const handleDelete = (e, id) => {

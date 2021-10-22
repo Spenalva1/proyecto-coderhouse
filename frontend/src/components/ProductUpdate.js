@@ -41,7 +41,7 @@ export const ProductUpdate = () => {
         autoClose: 2000,
         position: 'top-center',
       });
-      history.push(`/`);
+      history.push(`/product/${id}`);
     } catch (error) {
       setError(error.error_description || 'Error al conectarse al servidor.');
       toast(error.error_description || 'Error al conectarse al servidor.', {

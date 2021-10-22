@@ -25,6 +25,11 @@ const ProductDetail = () => {
     }
   }, [id]);
 
+  const handleEdit = (e, id) => {
+    e.stopPropagation();
+    history.push(`/product/update/${id}`);
+  };
+
   useEffect(() => {
     getProduct();
   }, [getProduct]);
@@ -88,7 +93,9 @@ const ProductDetail = () => {
       )}
       {user?.isAdmin && (
         <>
-          {/* <button type="button" onClick={(e) => handleEdit(e, product._id)}></button> */}
+          <button type="button" onClick={(e) => handleEdit(e, product._id)}>
+            Editar
+          </button>
           <button type="button" onClick={() => handleDelete(product._id)}>
             Borrar
           </button>
