@@ -3,12 +3,15 @@ import { ContainerStyles } from '../globalStyles';
 import Header from './Header';
 import Login from './Login';
 import Products from './Products';
-import ProtectedNotAuthRoute from './ProtectedNotAuthRoute';
 import ProtectedAuthRoute from './ProtectedAuthRoute';
+import ProtectedNotAuthRoute from './ProtectedNotAuthRoute';
 import Cart from './Cart';
 import Signup from './Signup';
 import ProductDetail from './ProductDetail';
 import Orders from './Orders';
+import ProductCreate from './ProductCreate';
+import ProtectedAdminRoute from './ProtectedAdminRoute';
+import ProductUpdate from './ProductUpdate';
 
 const Router = () => (
   <BrowserRouter>
@@ -16,7 +19,12 @@ const Router = () => (
     <ContainerStyles>
       <Switch>
         <Route exact path="/" component={Products} />
-        <Route exact path="/products/:id" component={ProductDetail} />
+        <ProtectedAdminRoute
+          path="/product/update/:id"
+          component={ProductUpdate}
+        />
+        <ProtectedAdminRoute path="/product/create" component={ProductCreate} />
+        <Route path="/product/:id" component={ProductDetail} />
         <ProtectedNotAuthRoute path="/login" component={Login} />
         <ProtectedNotAuthRoute path="/signup" component={Signup} />
         <ProtectedAuthRoute path="/cart" component={Cart} />

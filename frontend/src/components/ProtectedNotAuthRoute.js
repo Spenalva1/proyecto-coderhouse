@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
 
-function ProtectedNotAuthRoute({ component: Component, ...restOfProps }) {
+function ProtectedAuthRoute({ component: Component, ...restOfProps }) {
   const { token } = useUser();
 
   return (
@@ -15,4 +15,4 @@ function ProtectedNotAuthRoute({ component: Component, ...restOfProps }) {
   );
 }
 
-export default ProtectedNotAuthRoute;
+export default ProtectedAuthRoute;

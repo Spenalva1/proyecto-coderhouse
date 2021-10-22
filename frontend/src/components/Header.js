@@ -41,6 +41,7 @@ const Header = () => {
                 alt={user.firstName}
               />
             )}
+            {user?.isAdmin && <Link to="/product/create">Crear producto</Link>}
             <Link to="/cart">Carrito</Link>
             <Link to="/order">Órdenes</Link>
             <span onClick={handleLogout}>Cerrar sesión</span>

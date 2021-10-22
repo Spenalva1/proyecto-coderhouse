@@ -19,13 +19,17 @@ const LocalStateProvider = LocalStateContext.Provider;
 const baseUrl = environment.api;
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const [token, setToken] = useState(() => {
     return getToken();
   });
 
   const getUsuario = useCallback(async () => {
     try {
+      if (!token) {
+        setUser(null);
+        return;
+      }
       const userResponse = await axios.get(`${baseUrl}/user`);
       setUser(userResponse.data);
     } catch (error) {
@@ -34,12 +38,10 @@ const UserProvider = ({ children }) => {
       setToken(null);
       setUser(null);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
-    if (token) {
-      getUsuario();
-    }
+    getUsuario();
   }, [token, getUsuario]);
 
   const login = async (email, password) => {
@@ -50,9 +52,7 @@ const UserProvider = ({ children }) => {
       });
       setLocalToken(loginResponse.data.token);
       setToken(loginResponse.data.token);
-      const userResponse = await axios.get(`${baseUrl}/user`);
-      setUser(userResponse.data);
-      return userResponse.data;
+      return await axios.get(`${baseUrl}/user`);
     } catch (error) {
       throw error.response.data;
     }

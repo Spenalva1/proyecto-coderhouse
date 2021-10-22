@@ -2,6 +2,7 @@ import Mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new Mongoose.Schema({
+  isAdmin: { type: Boolean, default: false },
   firstName: { type: String, require: true, trim: true },
   lastName: { type: String, require: true, trim: true },
   email: {

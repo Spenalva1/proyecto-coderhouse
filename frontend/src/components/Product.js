@@ -1,20 +1,20 @@
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import formatMoney from '../lib/formatMoney';
-import isAdmin from '../lib/isAdmin';
+import { useUser } from '../providers/UserProvider';
 
 const Product = ({ product, handleAddProductToCart, handleProductDelete }) => {
   const history = useHistory();
-  const admin = isAdmin();
+  const { user } = useUser();
 
   const handleClick = () => {
-    history.push(`/products/${product._id}`);
+    history.push(`/${product._id}`);
   };
 
-  // const handleEdit = (e, id) => {
-  //   e.stopPropagation();
-  //   handleProductEdit(id);
-  // }
+  const handleEdit = (e, id) => {
+    e.stopPropagation();
+    history.push(`product/update/${product._id}`);
+  };
 
   const handleDelete = (e, id) => {
     e.stopPropagation();
@@ -33,19 +33,31 @@ const Product = ({ product, handleAddProductToCart, handleProductDelete }) => {
         <h3>{product.name}</h3>
         <span className="price">Price: {formatMoney(product.price)}</span>
       </div>
-      <div className="buttons">
-        {admin && (
-          <>
-            {/* <button type="button" onClick={(e) => handleEdit(e, product._id)}><i className="far fa-edit"></i></button> */}
-            <button type="button" onClick={(e) => handleDelete(e, product._id)}>
-              <i className="fas fa-trash"></i>
+      {user && (
+        <div className="buttons">
+          {user?.isAdmin && (
+            <>
+              <button type="button" onClick={(e) => handleEdit(e, product._id)}>
+                <i className="far fa-edit"></i>
+              </button>
+              <button
+                type="button"
+                onClick={(e) => handleDelete(e, product._id)}
+              >
+                <i className="fas fa-trash"></i>
+              </button>
+            </>
+          )}
+          {user && (
+            <button
+              type="button"
+              onClick={(e) => handleAddToCart(e, product._id)}
+            >
+              <i className="fas fa-shopping-cart"></i>
             </button>
-          </>
-        )}
-        <button type="button" onClick={(e) => handleAddToCart(e, product._id)}>
-          <i className="fas fa-shopping-cart"></i>
-        </button>
-      </div>
+          )}
+        </div>
+      )}
     </ProductStyles>
   );
 };

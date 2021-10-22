@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
 import formatMoney from '../lib/formatMoney';
-import isAdmin from '../lib/isAdmin';
+import { useUser } from '../providers/UserProvider';
 import { addToCartRest } from '../services/CartRest';
 import { deleteProductRest, getProductRest } from '../services/ProductsRest';
 import AddToCartModal from './AddToCartModal';
 
 const ProductDetail = () => {
-  const admin = isAdmin();
   const history = useHistory();
   const { id } = useParams();
+  const { user } = useUser();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [product, setProduct] = useState(null);
   const [error, setError] = useState('');
@@ -81,11 +81,12 @@ const ProductDetail = () => {
       <p>{product.description}</p>
       <p>Precio: {formatMoney(product.price)}</p>
       <p>Stock: {product.stock}</p>
-      <p>Código: {product.code}</p>
-      <button type="button" onClick={() => setIsCartModalOpen(true)}>
-        Agregar al carrito
-      </button>
-      {admin && (
+      {user && (
+        <button type="button" onClick={() => setIsCartModalOpen(true)}>
+          Agregar al carrito
+        </button>
+      )}
+      {user?.isAdmin && (
         <>
           {/* <button type="button" onClick={(e) => handleEdit(e, product._id)}></button> */}
           <button type="button" onClick={() => handleDelete(product._id)}>

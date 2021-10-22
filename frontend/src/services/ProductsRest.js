@@ -3,6 +3,32 @@ import environment from '../environment/environment';
 
 const baseUrl = environment.api;
 
+export const createProductRest = (product) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${baseUrl}/productos/`, product)
+      .then(async (resp) => {
+        resolve(resp.data);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
+export const updateProductRest = (id, product) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${baseUrl}/productos/${id}`, product)
+      .then(async (resp) => {
+        resolve(resp.data);
+      })
+      .catch((error) => {
+        reject(error.response.data);
+      });
+  });
+};
+
 const getProductsRest = () => {
   return new Promise((resolve, reject) => {
     axios

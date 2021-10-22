@@ -30,11 +30,10 @@ export async function getProduct(req, res) {
 
 export async function createProduct(req, res) {
   try {
-    const { name, description, code, photo, price, stock } = req.body;
+    const { name, description, photo, price, stock } = req.body;
     if (
       !(name?.length > 0) ||
       !(description?.length > 0) ||
-      !(String(code)?.length > 0) ||
       !(photo?.length > 0) ||
       !Number(price) ||
       !Number(stock)
@@ -47,7 +46,6 @@ export async function createProduct(req, res) {
     const newProduct = await Product.create({
       name,
       description,
-      code,
       photo,
       price,
       stock,
@@ -62,11 +60,10 @@ export async function createProduct(req, res) {
 
 export async function updateProduct(req, res) {
   try {
-    const { name, description, code, photo, price, stock } = req.body;
+    const { name, description, photo, price, stock } = req.body;
     if (
       !(name?.length > 0) ||
       !(description?.length > 0) ||
-      !(String(code)?.length > 0) ||
       !(photo?.length > 0) ||
       !Number(price) ||
       !Number(stock)
@@ -76,7 +73,7 @@ export async function updateProduct(req, res) {
         .json({ error_description: 'Parametros erroneos.' });
     }
 
-    const updatedProduct = { name, description, code, photo, price, stock };
+    const updatedProduct = { name, description, photo, price, stock };
     const id = req.params.id;
 
     if (await Product.findByIdAndUpdate(id, updatedProduct)) {

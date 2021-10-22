@@ -37,7 +37,7 @@ export const Login = () => {
       <h3>LOGIN</h3>
       <div>
         <label htmlFor="email">Email:</label>
-        <input required ref={emailRef} type="email" name="email" id="email" />
+        <input required ref={emailRef} type="text" name="email" id="email" />
       </div>
       <div>
         <label htmlFor="password">Contraseña:</label>
