@@ -14,6 +14,7 @@ export const Signup = () => {
     lastName: '',
     email: '',
     password: '',
+    repassword: '',
     phone: '',
     address: '',
     photo: '',
@@ -23,6 +24,14 @@ export const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (inputs.password !== inputs.repassword) {
+      toast('Las contraseñas no coinciden.', {
+        type: 'error',
+        autoClose: 2000,
+        position: 'top-center',
+      });
+      return;
+    }
     try {
       await signup(inputs);
       toast(`Cuenta creada con exito! Ahora puedes loguearte.`, {
@@ -86,6 +95,17 @@ export const Signup = () => {
           value={inputs.password}
           type="text"
           name="password"
+          id="password"
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Repetir contraseña: </label>
+        <input
+          required
+          onChange={handleChange}
+          value={inputs.repassword}
+          type="text"
+          name="repassword"
           id="password"
         />
       </div>

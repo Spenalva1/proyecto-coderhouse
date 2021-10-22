@@ -6,7 +6,7 @@ import { useUser } from '../providers/UserProvider';
 
 export const Login = () => {
   const [error, setError] = useState('');
-  const { login, user } = useUser();
+  const { login } = useUser();
   const emailRef = useRef();
   const passwordRef = useRef();
 
