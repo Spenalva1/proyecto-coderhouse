@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
+import UserDAO from '../dao/UserDAO.js';
+import User from '../models/User.js';
 import logger from '../lib/logger.js';
 import { sendEmail, signupInfo } from '../lib/mail.js';
-import User from '../models/User.js';
 
-export async function getUsuario(req, res) {
+export async function getUser(req, res) {
   try {
-    const user = await User.findById(req.user.id);
-    const userJson = user.toObject({ virtuals: true });
-    res.json(userJson);
+    const user = await UserDAO.findById(req.user._id);
+    res.json(user);
   } catch (error) {
     logger.error(`Error al obtener usuario. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -34,14 +34,14 @@ export async function signup(req, res) {
     }
 
     let user;
-    user = await User.findOne({ email });
+    user = await UserDAO.findOne({ email });
     if (user) {
       return res
         .status(400)
         .json({ error_description: 'El email ya se encuentra registrado.' });
     }
 
-    const newUser = new User({
+    user = await UserDAO.create({
       firstName,
       lastName,
       email,
@@ -50,12 +50,11 @@ export async function signup(req, res) {
       address,
       photo: req.file?.filename ?? 'default.jpg',
     });
-    await newUser.save();
-    const newUserDoc = newUser._doc;
-    delete newUserDoc.password;
-    sendEmail(signupInfo(newUserDoc), 'Nuevo registro');
+
+    sendEmail(signupInfo(user), 'Nuevo registro');
+    sendEmail(signupInfo(user), 'Nuevo registro', user.email);
     logger.info('Nuevo usuario registrado.');
-    return res.status(201).json(newUserDoc);
+    return res.status(201).json(user);
   } catch (error) {
     logger.error(`Error al registrar usuario. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });

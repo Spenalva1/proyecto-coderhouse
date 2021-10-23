@@ -99,14 +99,14 @@ export const Signup = () => {
         />
       </div>
       <div>
-        <label htmlFor="password">Repetir contraseña: </label>
+        <label htmlFor="repassword">Repetir contraseña: </label>
         <input
           required
           onChange={handleChange}
           value={inputs.repassword}
           type="password"
           name="repassword"
-          id="password"
+          id="repassword"
         />
       </div>
       <div>

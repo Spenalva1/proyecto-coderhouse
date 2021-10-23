@@ -1,12 +1,13 @@
 import logger from '../lib/logger.js';
 import { checkoutInfo, sendEmail } from '../lib/mail.js';
-import CartItem from '../models/CartItem.js';
-import OrderItem from '../models/OrderItem.js';
+import CartItemDAO from '../dao/CartItemDAO.js';
+import OrderItemDAO from '../dao/OrderItemDAO.js';
+import OrderDAO from '../dao/OrderDAO.js';
 import Order from '../models/Order.js';
 
 export async function checkout(req, res) {
   try {
-    const { firstName, lastName, email, cart, phone } = req.user;
+    const { firstName, lastName, email, cart } = req.user;
     const name = `${firstName} ${lastName}`;
 
     if (!cart || cart?.length <= 0) {
@@ -29,22 +30,26 @@ export async function checkout(req, res) {
       };
     });
 
-    const orderItemsDoc = await OrderItem.create(orderItems);
+    const orderItemsDto = await OrderItemDAO.create(orderItems);
 
-    const order = new Order({
+    const order = await OrderDAO.create({
       orderNumber: await Order.count(),
-      products: orderItemsDoc.map((oi) => oi._id),
+      products: orderItemsDto.map((oi) => oi._id),
       total,
       userEmail: req.user.email,
       date: new Date(),
     });
-    await order.save();
 
     sendEmail(
       checkoutInfo(name, email, products),
       `Nuevo pedido de ${name} - ${email}`
     );
-    await CartItem.deleteMany({ user: req.user.id });
+    sendEmail(
+      checkoutInfo(name, email, products),
+      `Nuevo pedido de ${name} - ${email}`,
+      email
+    );
+    await CartItemDAO.delete({ user: req.user._id });
     res.json(order);
   } catch (error) {
     logger.error(`Error en el checkout. ${error}`);
@@ -56,7 +61,7 @@ export async function checkout(req, res) {
 export async function getOrders(req, res) {
   try {
     return res.json(
-      await Order.find({ userEmail: req.user.email }).sort({ _id: -1 })
+      await OrderDAO.find({ userEmail: req.user.email }, { _id: -1 })
     );
   } catch (error) {
     logger.error(`Error al obtener carrito. ${error}`);
@@ -66,7 +71,7 @@ export async function getOrders(req, res) {
 
 export async function getOrder(req, res) {
   try {
-    const order = await Order.findOne({
+    const order = await OrderDAO.findOne({
       // Un usuario solo puede solicitar una orden suya
       _id: req.params.id,
       userEmail: req.user.email,

@@ -1,10 +1,10 @@
+import CartItemDAO from '../dao/CartItemDAO.js';
+import ProductDAO from '../dao/ProductDAO.js';
 import logger from '../lib/logger.js';
-import CartItem from '../models/CartItem.js';
-import Product from '../models/Product.js';
 
 export async function getProducts(req, res) {
   try {
-    const products = await Product.find().sort({ _id: -1 });
+    const products = await ProductDAO.find({}, { _id: -1 });
     res.json({ products });
   } catch (error) {
     logger.error(`Error al listar productos. ${error}`);
@@ -14,7 +14,7 @@ export async function getProducts(req, res) {
 
 export async function getProduct(req, res) {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await ProductDAO.findById(req.params.id);
 
     if (!product)
       return res
@@ -43,7 +43,7 @@ export async function createProduct(req, res) {
         .json({ error_description: 'Parámetros erroneos.' });
     }
 
-    const newProduct = await Product.create({
+    const newProduct = await ProductDAO.create({
       name,
       description,
       photo,
@@ -76,11 +76,8 @@ export async function updateProduct(req, res) {
     const updatedProduct = { name, description, photo, price, stock };
     const id = req.params.id;
 
-    if (await Product.findByIdAndUpdate(id, updatedProduct)) {
-      const product = {
-        _id: id,
-        ...updatedProduct,
-      };
+    const product = await ProductDAO.update(id, updatedProduct);
+    if (product) {
       return res.status(201).json(product);
     }
     return res
@@ -94,7 +91,7 @@ export async function updateProduct(req, res) {
 
 export async function deleteProduct(req, res) {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await ProductDAO.deleteById(req.params.id);
     if (!product) {
       return res
         .status(400)
@@ -102,7 +99,7 @@ export async function deleteProduct(req, res) {
     }
 
     // Saco el producto borrado de todos los carritos que lo contengan
-    await CartItem.deleteMany({
+    await CartItemDAO.delete({
       product: { _id: req.params.id },
     });
 

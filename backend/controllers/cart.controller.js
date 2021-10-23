@@ -1,10 +1,11 @@
+import CartItemDAO from '../dao/CartItemDAO.js';
 import logger from '../lib/logger.js';
 import CartItem from '../models/CartItem.js';
 import Product from '../models/Product.js';
 
 export async function getCartItems(req, res) {
   try {
-    const cartItems = await CartItem.find({ user: req.user.id });
+    const cartItems = await CartItemDAO.find({ user: req.user._id });
     return res.json(cartItems);
   } catch (error) {
     logger.error(`Error al obtener carrito. ${error}`);
@@ -25,24 +26,24 @@ export async function createCartItem(req, res) {
         .json({ error_description: 'Producto no encontrado.' });
     }
 
-    let [cartItem] = await CartItem.find({
-      user: req.user.id,
+    let cartItem = await CartItemDAO.findOne({
+      user: req.user._id,
       product: { _id: req.params.id },
     });
 
     if (cartItem) {
       // Ya tiene el producto en el carrito, por lo que le sumamos la nueva cantidad
       cartItem.quantity = cartItem.quantity + quantity;
+      CartItemDAO.update(cartItem._id, cartItem);
     } else {
       // El producto no se encuentra en el carrito, lo agregamos
       cartItem = new CartItem({
-        user: req.user.id,
+        user: req.user._id,
         product: req.params.id,
         quantity,
       });
+      CartItemDAO.create(cartItem);
     }
-
-    await cartItem.save();
     return res.status(201).json(cartItem);
   } catch (error) {
     logger.error(`Error al agregar producto al carrito. ${error}`);
@@ -60,7 +61,7 @@ export async function updateCartItem(req, res) {
         .json({ error_description: 'Parametros erroneos.' });
     }
 
-    const cartItem = await CartItem.findById(id);
+    const cartItem = await CartItemDAO.findById(id);
 
     if (!cartItem) {
       return res
@@ -69,7 +70,7 @@ export async function updateCartItem(req, res) {
     }
 
     cartItem.quantity = quantity;
-    cartItem.save();
+    CartItemDAO.update(cartItem._id, cartItem);
     return res.status(201).json(cartItem);
   } catch (error) {
     logger.error(`Error al modificar cantidad del producto. ${error}`);
@@ -79,7 +80,7 @@ export async function updateCartItem(req, res) {
 
 export async function deleteCartItem(req, res) {
   try {
-    const cartItem = await CartItem.findByIdAndDelete(req.params.id);
+    const cartItem = await CartItemDAO.deleteById(req.params.id);
     if (!cartItem) {
       return res.status(400).json({ error_description: 'Ítem no encontrado.' });
     }

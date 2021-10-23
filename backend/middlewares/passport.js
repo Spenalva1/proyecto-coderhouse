@@ -1,8 +1,8 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import passport from 'passport';
 import config from '../config/config.js';
-import User from '../models/User.js';
 import logger from '../lib/logger.js';
+import UserDAO from '../dao/UserDAO.js';
 
 export default new Strategy(
   {
@@ -15,7 +15,7 @@ export default new Strategy(
       if (!id) {
         return done(null, user);
       }
-      const user = await User.findById(id);
+      const user = await UserDAO.findById(id);
       if (user) {
         return done(null, user);
       }

@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getUsuario,
+  getUser,
   login,
   signup,
   unauthorized,
@@ -14,7 +14,7 @@ routerUser.post('/token', login);
 
 routerUser.get('/unauthorized', unauthorized);
 
-routerUser.get('/user', passportAuth(), getUsuario);
+routerUser.get('/user', passportAuth(), getUser);
 
 routerUser.post('/user', multerMiddleware.single('photo'), signup);
 

@@ -34,3 +34,26 @@
 {"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
 {"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
 {"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d4sm2483893vkq.54 - gsmtp","level":"error"}
+{"message":"Error al actualizar producto. TypeError: ProductDAO.findByIdAndUpdate is not a function","level":"error"}
+{"message":"Error al borrar producto. TypeError: Product.deleteById is not a function","level":"error"}
+{"message":"Error al borrar producto. TypeError: Product.deleteById is not a function","level":"error"}
+{"message":"Error en el checkout. ReferenceError: CartItem is not defined","level":"error"}
+{"message":"Error al loguear usuario. ReferenceError: User is not defined","level":"error"}
+{"message":"Error al loguear usuario. TypeError: user.comparePassword is not a function","level":"error"}
+{"message":"Error al loguear usuario. ReferenceError: User is not defined","level":"error"}
+{"message":"Error al loguear usuario. TypeError: User.comparePassword is not a function","level":"error"}
+{"message":"Error al loguear usuario. TypeError: User.comparePassword is not a function","level":"error"}
+{"message":"Error al loguear usuario. TypeError: user.comparePassword is not a function","level":"error"}
+{"message":"Error al obtener usuario. TypeError: user.toObject is not a function","level":"error"}
+{"message":"Error al obtener usuario. TypeError: user.toObject is not a function","level":"error"}
+{"message":"Error en el checkout. ReferenceError: orderITems is not defined","level":"error"}
+{"message":"Error de passport. TypeError: User.findById(...).virtuals is not a function","level":"error"}
+{"message":"Error de passport. TypeError: User.findById(...).virtuals is not a function","level":"error"}
+{"message":"Error de passport. ReferenceError: req is not defined","level":"error"}
+{"message":"Error de passport. ReferenceError: req is not defined","level":"error"}
+{"message":"Error de passport. TypeError: UserDAO.findById is not a function","level":"error"}
+{"message":"Error de passport. TypeError: UserDAO.findById is not a function","level":"error"}
+{"message":"Error de passport. TypeError: UserDAO.findById is not a function","level":"error"}
+{"message":"Error de passport. TypeError: UserDAO.findById is not a function","level":"error"}
+{"message":"Error al borrar producto. TypeError: Cannot destructure property '_id' of '(intermediate value)' as it is null.","level":"error"}
+{"message":"Error al registrar usuario. ReferenceError: user is not defined","level":"error"}
