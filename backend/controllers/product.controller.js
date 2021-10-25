@@ -5,7 +5,7 @@ import logger from '../lib/logger.js';
 export async function getProducts(req, res) {
   try {
     const products = await ProductDAO.find({}, { _id: -1 });
-    res.json({ products });
+    res.json(products);
   } catch (error) {
     logger.error(`Error al listar productos. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -18,7 +18,7 @@ export async function getProduct(req, res) {
 
     if (!product)
       return res
-        .status(400)
+        .status(404)
         .json({ error_description: 'Producto no encontrado.' });
 
     res.json(product);
@@ -49,6 +49,7 @@ export async function createProduct(req, res) {
       photo,
       price,
       stock,
+      timestamp: Date.now(),
     });
 
     return res.status(201).json(newProduct);
@@ -78,10 +79,10 @@ export async function updateProduct(req, res) {
 
     const product = await ProductDAO.update(id, updatedProduct);
     if (product) {
-      return res.status(201).json(product);
+      return res.status(200).json(product);
     }
     return res
-      .status(400)
+      .status(404)
       .json({ error_description: 'Producto no encontrado.' });
   } catch (error) {
     logger.error(`Error al actualizar producto. ${error}`);
@@ -94,7 +95,7 @@ export async function deleteProduct(req, res) {
     const product = await ProductDAO.deleteById(req.params.id);
     if (!product) {
       return res
-        .status(400)
+        .status(404)
         .json({ error_description: 'Producto no encontrado.' });
     }
 
@@ -103,7 +104,7 @@ export async function deleteProduct(req, res) {
       product: { _id: req.params.id },
     });
 
-    res.json(product);
+    res.status(200).json(product);
   } catch (error) {
     logger.error(`Error al borrar producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });

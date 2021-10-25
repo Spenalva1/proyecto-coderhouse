@@ -1,6 +1,5 @@
 import CartItemDAO from '../dao/CartItemDAO.js';
 import logger from '../lib/logger.js';
-import CartItem from '../models/CartItem.js';
 import Product from '../models/Product.js';
 
 export async function getCartItems(req, res) {
@@ -35,16 +34,17 @@ export async function createCartItem(req, res) {
       // Ya tiene el producto en el carrito, por lo que le sumamos la nueva cantidad
       cartItem.quantity = cartItem.quantity + quantity;
       CartItemDAO.update(cartItem._id, cartItem);
+      return res.status(200).json(cartItem);
     } else {
       // El producto no se encuentra en el carrito, lo agregamos
-      cartItem = new CartItem({
+      cartItem = await CartItemDAO.create({
         user: req.user._id,
         product: req.params.id,
         quantity,
+        timestamp: Date.now(),
       });
-      CartItemDAO.create(cartItem);
+      return res.status(201).json(cartItem);
     }
-    return res.status(201).json(cartItem);
   } catch (error) {
     logger.error(`Error al agregar producto al carrito. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -55,7 +55,7 @@ export async function updateCartItem(req, res) {
   try {
     const { id } = req.params;
     const { quantity } = req.body;
-    if (Number(quantity) <= 0) {
+    if (Number(quantity) <= 0 || isNaN(quantity)) {
       return res
         .status(400)
         .json({ error_description: 'Parametros erroneos.' });
@@ -65,13 +65,13 @@ export async function updateCartItem(req, res) {
 
     if (!cartItem) {
       return res
-        .status(400)
+        .status(404)
         .json({ error_description: 'Ítem de carrito no encontrado.' });
     }
 
     cartItem.quantity = quantity;
     CartItemDAO.update(cartItem._id, cartItem);
-    return res.status(201).json(cartItem);
+    return res.status(200).json(cartItem);
   } catch (error) {
     logger.error(`Error al modificar cantidad del producto. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });
@@ -82,9 +82,9 @@ export async function deleteCartItem(req, res) {
   try {
     const cartItem = await CartItemDAO.deleteById(req.params.id);
     if (!cartItem) {
-      return res.status(400).json({ error_description: 'Ítem no encontrado.' });
+      return res.status(404).json({ error_description: 'Ítem no encontrado.' });
     }
-    res.json({ cartItem });
+    res.json(cartItem);
   } catch (error) {
     logger.error(`Error al borrar producto del carrito. ${error}`);
     return res.status(500).json({ error_description: 'Error del servidor.' });

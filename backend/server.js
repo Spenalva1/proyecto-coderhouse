@@ -1,7 +1,9 @@
 import passport from 'passport';
 import express from 'express';
 import cors from 'cors';
+import SwaggerUI from 'swagger-ui-express';
 import config from './config/config.js';
+import swaggerSpecs from './swagger/swagger.js';
 import passportMiddleware from './middlewares/passport.js';
 import routers from './routes/index.js';
 import './db/db.js';
@@ -22,6 +24,7 @@ app.use(passport.initialize());
 passport.use(passportMiddleware);
 
 // ROUTES
+app.use('/swagger', SwaggerUI.serve, SwaggerUI.setup(swaggerSpecs));
 app.use('/productos', routers.products);
 app.use('/', routers.user);
 app.use('/carrito', routers.cart);

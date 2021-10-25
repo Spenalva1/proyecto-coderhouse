@@ -1,6 +1,6 @@
 import IDAO from './IDAO.js';
 import Order from '../models/Order.js';
-import OderDTO from '../dto/OrderDTO.js';
+import OrderDTO from '../dto/OrderDTO.js';
 import OrderItemDTO from '../dto/OrderItemDTO.js';
 
 class OrderDAO extends IDAO {
@@ -9,9 +9,10 @@ class OrderDAO extends IDAO {
   }
 
   async create(data) {
-    const { _id, orderNumber, products, total, date, userEmail } =
-      await Order.create(data);
-    return new OderDTO(_id, orderNumber, products, total, date, userEmail);
+    const order = await Order.create(data);
+    await order.populate('products').execPopulate();
+    const { _id, orderNumber, products, total, date, userEmail } = order;
+    return new OrderDTO(_id, orderNumber, products, total, date, userEmail);
   }
 
   async find(query = {}, sort = null) {
@@ -34,7 +35,7 @@ class OrderDAO extends IDAO {
               orderItem.quantity
             )
         );
-        return new OderDTO(
+        return new OrderDTO(
           _id,
           orderNumber,
           orderItems,
@@ -61,7 +62,7 @@ class OrderDAO extends IDAO {
             orderItem.quantity
           )
       );
-      return new OderDTO(_id, orderNumber, orderItems, total, date, userEmail);
+      return new OrderDTO(_id, orderNumber, orderItems, total, date, userEmail);
     }
     return null;
   }

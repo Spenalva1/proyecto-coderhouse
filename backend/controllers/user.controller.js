@@ -90,5 +90,5 @@ function createToken({ email, _id }) {
 }
 
 export async function unauthorized(req, res) {
-  res.status(403).json({ error_description: 'Acceso no autorizado.' });
+  res.status(401).json({ error_description: 'Acceso no autorizado.' });
 }

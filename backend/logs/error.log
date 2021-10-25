@@ -57,3 +57,8 @@
 {"message":"Error de passport. TypeError: UserDAO.findById is not a function","level":"error"}
 {"message":"Error al borrar producto. TypeError: Cannot destructure property '_id' of '(intermediate value)' as it is null.","level":"error"}
 {"message":"Error al registrar usuario. ReferenceError: user is not defined","level":"error"}
+{"message":"Error al borrar producto del carrito. TypeError: Cannot destructure property '_id' of '(intermediate value)' as it is null.","level":"error"}
+{"message":"Error al borrar producto del carrito. TypeError: Cannot destructure property '_id' of '(intermediate value)' as it is null.","level":"error"}
+{"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}
+{"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}
+{"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}

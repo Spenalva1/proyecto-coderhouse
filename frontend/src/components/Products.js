@@ -24,7 +24,7 @@ const Products = () => {
     try {
       const data = await getProductsRest();
       setProductsState({
-        products: data.products,
+        products: data,
         loading: false,
       });
     } catch (error) {
@@ -32,7 +32,6 @@ const Products = () => {
         products: [],
         loading: false,
       });
-      console.error(error);
     }
   };
 

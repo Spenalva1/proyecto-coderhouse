@@ -25,6 +25,23 @@ axios.interceptors.request.use(
   }
 );
 
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (!error.response) {
+      return Promise.reject({
+        response: {
+          data: 'No se pudo establecer la conexión con el servidor.',
+        },
+      });
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyles />

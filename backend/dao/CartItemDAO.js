@@ -69,8 +69,9 @@ class CartItemDAO extends IDAO {
 
   async deleteById(id) {
     if (!isValidId(id)) return null;
-    const { _id, user, product, quantity, timestamp } =
-      await CartItem.findByIdAndDelete(id);
+    const cartItem = await CartItem.findByIdAndDelete(id);
+    if (!cartItem) return null;
+    const { _id, user, product, quantity, timestamp } = cartItem;
     return new CartItemDTO(_id, user, product, quantity, timestamp);
   }
 }

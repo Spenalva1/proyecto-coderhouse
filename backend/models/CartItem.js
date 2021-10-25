@@ -14,5 +14,6 @@ function autopopulate(next) {
 
 cartsSchema.pre('find', autopopulate);
 cartsSchema.pre('findOne', autopopulate);
+cartsSchema.pre('findByIdAndDelete', autopopulate);
 
 export default mongoose.model('CartItem', cartsSchema);

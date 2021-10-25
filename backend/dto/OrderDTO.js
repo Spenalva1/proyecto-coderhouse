@@ -1,4 +1,4 @@
-class OrderItemDTO {
+class OrderDTO {
   constructor(_id, orderNumber, products, total, date, userEmail) {
     this._id = _id;
     this.orderNumber = orderNumber;
@@ -9,4 +9,4 @@ class OrderItemDTO {
   }
 }
 
-export default OrderItemDTO;
+export default OrderDTO;

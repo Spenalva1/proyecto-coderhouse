@@ -50,7 +50,7 @@ export async function checkout(req, res) {
       email
     );
     await CartItemDAO.delete({ user: req.user._id });
-    res.json(order);
+    res.status(201).json(order);
   } catch (error) {
     logger.error(`Error en el checkout. ${error}`);
     console.error(error);
@@ -79,7 +79,7 @@ export async function getOrder(req, res) {
 
     if (!order)
       return res
-        .status(400)
+        .status(404)
         .json({ error_description: 'Orden no encontrada.' });
 
     res.json(order);
