@@ -62,3 +62,7 @@
 {"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}
 {"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}
 {"message":"Error al listar productos. ReferenceError: productss is not defined","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
+{"message":"Error al enviar mail de asunto Nuevo pedido de Santiago Nicolás Penalva - penalvasantiagogm@gmail.com a penalvasantiagogm@gmail.com: Error: Missing credentials for \"PLAIN\"","level":"error"}
