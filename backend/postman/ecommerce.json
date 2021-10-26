@@ -14,13 +14,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/productos/listar",
+							"raw": "{{URL}}/productos",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"productos",
-								"listar"
+								"productos"
 							]
 						}
 					},
@@ -32,14 +31,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/productos/listar/1626235255198",
+							"raw": "{{URL}}/productos/617392789cd6433728104f70",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"productos",
-								"listar",
-								"1626235255198"
+								"617392789cd6433728104f70"
 							]
 						}
 					},
@@ -52,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"probando agregar\",\r\n    \"description\": \"tremendo\",\r\n    \"code\": \"1234561231\",\r\n    \"photo\": \"https://picsum.photos/300/200\",\r\n    \"price\": 9999.99,\r\n    \"stock\": 100\r\n}",
+							"raw": "{\r\n    \"name\": \"producto 4\",\r\n    \"description\": \"tremendo\",\r\n    \"photo\": \"https://picsum.photos/300/200\",\r\n    \"price\": 9999.99,\r\n    \"stock\": 100\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -60,13 +58,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/productos/agregar",
+							"raw": "{{URL}}/productos",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"productos",
-								"agregar"
+								"productos"
 							]
 						}
 					},
@@ -79,7 +76,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"producto2\",\r\n    \"description\": \"tremendous\",\r\n    \"code\": 123456,\r\n    \"photo\": \"https://picsum.photos/300/200\",\r\n    \"price\": 99.99,\r\n    \"stock\": 10\r\n}",
+							"raw": "{\r\n    \"name\": \"producto2\",\r\n    \"description\": \"tremendous\",\r\n    \"photo\": \"https://picsum.photos/300/200\",\r\n    \"price\": 99.99,\r\n    \"stock\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,14 +84,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/productos/actualizar/1626235255198",
+							"raw": "{{URL}}/productos/6173929b9cd6433728104f7a",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"productos",
-								"actualizar",
-								"1626235255198"
+								"6173929b9cd6433728104f7a"
 							]
 						}
 					},
@@ -106,14 +102,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/productos/borrar/1626235255198",
+							"raw": "{{URL}}/productos/6173929b9cd6433728104f7a",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"productos",
-								"borrar",
-								"1626235255198"
+								"6173929b9cd6433728104f7a"
 							]
 						}
 					},
@@ -136,13 +131,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL}}/carrito/listar",
+							"raw": "{{URL}}/carrito",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"carrito",
-								"listar"
+								"carrito"
 							]
 						}
 					},
@@ -161,7 +155,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"quantity\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,23 +163,22 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/carrito/agregar/60ef9286634c0e348c67e630",
+							"raw": "{{URL}}/carrito/613e184ae30cbf44400885c6",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"carrito",
-								"agregar",
-								"60ef9286634c0e348c67e630"
+								"613e184ae30cbf44400885c6"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "checkout",
+					"name": "actualizar",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
@@ -195,7 +188,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"quantity\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,13 +196,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/carrito/checkout",
+							"raw": "{{URL}}/carrito/617394a1f1fa1f2a98340d2a",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"carrito",
-								"checkout"
+								"617394a1f1fa1f2a98340d2a"
 							]
 						}
 					},
@@ -227,14 +220,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{URL}}/carrito/borrar/6136e3aa6881703a085c38aa",
+							"raw": "{{URL}}/carrito/61748f8579ce6503a4e87045",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"carrito",
-								"borrar",
-								"6136e3aa6881703a085c38aa"
+								"61748f8579ce6503a4e87045"
 							]
 						}
 					},
@@ -247,6 +239,18 @@
 			"item": [
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = JSON.parse(responseBody).token;\r",
+									"pm.environment.set('Token', headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -260,12 +264,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/login",
+							"raw": "{{URL}}/token",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"login"
+								"token"
 							]
 						}
 					},
@@ -278,7 +282,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Santiago\", \r\n    \"lastName\": \"Penalva\", \r\n    \"email\": \"penalvasantiagogm@gmail.com\", \r\n    \"password\": \"1234\", \r\n    \"phone\": \"+541166400929\", \r\n    \"address\": \"virrey\", \r\n    \"photo\": \"https://picsum.photos/300/200\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"Santiago\", \r\n    \"lastName\": \"Penalva\", \r\n    \"email\": \"holaaaaaa@gmail.com\", \r\n    \"password\": \"1234\", \r\n    \"phone\": \"+541166400929\", \r\n    \"address\": \"virrey\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,12 +290,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/signup",
+							"raw": "{{URL}}/user",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
-								"signup"
+								"user"
 							]
 						}
 					},
@@ -315,6 +319,114 @@
 							],
 							"path": [
 								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/ordenes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/ordenes",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"ordenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar/:id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/ordenes/617392269cd6433728104f65",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"ordenes",
+								"617392269cd6433728104f65"
 							]
 						}
 					},

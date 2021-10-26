@@ -30,6 +30,7 @@ export async function checkout(req, res) {
       };
     });
 
+    // Creo OrderItems que representan a los productos de la orden. De esta manera, si en el futuro borran el producto, la informacion de la orden no se pierde
     const orderItemsDto = await OrderItemDAO.create(orderItems);
 
     const order = await OrderDAO.create({
@@ -49,6 +50,8 @@ export async function checkout(req, res) {
       `Nuevo pedido de ${name} - ${email}`,
       email
     );
+
+    // Vacío el carrito del usuario que realizó la orden
     await CartItemDAO.delete({ user: req.user._id });
     res.status(201).json(order);
   } catch (error) {
@@ -60,6 +63,7 @@ export async function checkout(req, res) {
 
 export async function getOrders(req, res) {
   try {
+    // Devuelvo las ordenes del usuario logueado por JWT
     return res.json(
       await OrderDAO.find({ userEmail: req.user.email }, { _id: -1 })
     );
@@ -71,6 +75,7 @@ export async function getOrders(req, res) {
 
 export async function getOrder(req, res) {
   try {
+    // Devuelvo las orden con el id recibido por params solo si pertenece al usuario logueado por JWT
     const order = await OrderDAO.findOne({
       // Un usuario solo puede solicitar una orden suya
       _id: req.params.id,

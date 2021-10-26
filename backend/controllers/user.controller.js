@@ -8,6 +8,7 @@ import { sendEmail, signupInfo } from '../lib/mail.js';
 export async function getUser(req, res) {
   try {
     const user = await UserDAO.findById(req.user._id);
+    // Devuelvo la información del usuario logueado por JWT
     res.json(user);
   } catch (error) {
     logger.error(`Error al obtener usuario. ${error}`);
@@ -48,10 +49,13 @@ export async function signup(req, res) {
       password,
       phone,
       address,
+      // Si el usuario envio el archivo en el formulario, con multer se guardará el archivo en la carpeta public. Si no se envió una foto, se le asigna una por defecto
       photo: req.file?.filename ?? 'default.jpg',
     });
 
+    // Se envía mail al administrador
     sendEmail(signupInfo(user), 'Nuevo registro');
+    // Se envía mail al usuario registrado
     sendEmail(signupInfo(user), 'Nuevo registro', user.email);
     logger.info('Nuevo usuario registrado.');
     return res.status(201).json(user);
@@ -78,6 +82,7 @@ export async function login(req, res) {
       return res.status(401).json({ error_description: 'Datos incorrectos' });
     }
 
+    // Se devuelve JWT generado para que el usuario utilice en sus próximas requests
     return res.json({ token: createToken(user) });
   } catch (error) {
     logger.error(`Error al loguear usuario. ${error}`);

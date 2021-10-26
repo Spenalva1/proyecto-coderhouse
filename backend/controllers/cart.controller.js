@@ -4,6 +4,7 @@ import Product from '../models/Product.js';
 
 export async function getCartItems(req, res) {
   try {
+    // obtengo los items relacionados con el usuario logueado por JWT
     const cartItems = await CartItemDAO.find({ user: req.user._id });
     return res.json(cartItems);
   } catch (error) {
@@ -36,7 +37,7 @@ export async function createCartItem(req, res) {
       CartItemDAO.update(cartItem._id, cartItem);
       return res.status(200).json(cartItem);
     } else {
-      // El producto no se encuentra en el carrito, lo agregamos
+      // El producto no se encuentra en el carrito, lo agregamos creando un CartItem que relacione al usuario logueado con el producto indicado por params
       cartItem = await CartItemDAO.create({
         user: req.user._id,
         product: req.params.id,
@@ -80,6 +81,7 @@ export async function updateCartItem(req, res) {
 
 export async function deleteCartItem(req, res) {
   try {
+    // Borro el CartItem que relaciona al usuario logueado por JWT con el producto recibido por params
     const cartItem = await CartItemDAO.deleteById(req.params.id);
     if (!cartItem) {
       return res.status(404).json({ error_description: 'Ítem no encontrado.' });
