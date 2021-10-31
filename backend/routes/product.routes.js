@@ -15,6 +15,14 @@ const routerProducts = express.Router();
  *  @swagger
  *  components:
  *  schemas:
+ *    Error:
+ *      type: object
+ *      required:
+ *        - error_message
+ *      properties:
+ *        error_message:
+ *          type: string
+ *          description: Descripción del error
  *    Producto:
  *      type: object
  *      required:
@@ -79,6 +87,10 @@ const routerProducts = express.Router();
  *                  $ref: '#/components/schemas/Producto'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerProducts.get('/', getProducts);
 
@@ -101,15 +113,25 @@ routerProducts.get('/', getProducts);
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Producto'
+ *                $ref: '#/components/schemas/Producto'
  *        400:
  *          description: El Id recibido no es válido
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Producto no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerProducts.get('/:id', isValidMongoId, getProduct);
 
@@ -162,10 +184,18 @@ routerProducts.get('/:id', isValidMongoId, getProduct);
  *                $ref: '#/components/schemas/Producto'
  *        400:
  *          description: Parametros inválidos
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
-routerProducts.post('/', isAdmin, isValidMongoId, createProduct);
+routerProducts.post('/', isAdmin, createProduct);
 
 /**
  *  @swagger
@@ -223,10 +253,22 @@ routerProducts.post('/', isAdmin, isValidMongoId, createProduct);
  *                $ref: '#/components/schemas/Producto'
  *        400:
  *          description: Parametros inválidos
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Producto no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerProducts.put('/:id', isAdmin, isValidMongoId, updateProduct);
 
@@ -245,19 +287,29 @@ routerProducts.put('/:id', isAdmin, isValidMongoId, updateProduct);
  *          description: El Id del producto
  *      responses:
  *        200:
- *          description: El productofue eliminado exitosamente
+ *          description: El producto fue eliminado exitosamente
  *          content:
  *            application/json:
  *              schema:
- *                type: array
- *                items:
- *                  $ref: '#/components/schemas/Producto'
+ *                $ref: '#/components/schemas/Producto'
  *        400:
  *          description: El Id recibido no es válido
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Producto no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerProducts.delete('/:id', isAdmin, isValidMongoId, deleteProduct);
 

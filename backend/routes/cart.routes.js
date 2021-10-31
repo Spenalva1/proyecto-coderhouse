@@ -77,8 +77,16 @@ const routerCart = express.Router();
  *                  $ref: '#/components/schemas/CartItem'
  *        401:
  *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerCart.get('/', passportAuth(), getCartItems);
 
@@ -126,12 +134,28 @@ routerCart.get('/', passportAuth(), getCartItems);
  *                $ref: '#/components/schemas/CartItem'
  *        400:
  *          description: Parametros inválidos
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        401:
  *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Producto no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerCart.post('/:id', passportAuth(), isValidMongoId, createCartItem);
 
@@ -173,12 +197,28 @@ routerCart.post('/:id', passportAuth(), isValidMongoId, createCartItem);
  *                $ref: '#/components/schemas/CartItem'
  *        400:
  *          description: Parametros inválidos
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        401:
  *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: CartItem no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerCart.put('/:id', passportAuth(), isValidMongoId, updateCartItem);
 
@@ -206,12 +246,28 @@ routerCart.put('/:id', passportAuth(), isValidMongoId, updateCartItem);
  *                $ref: '#/components/schemas/CartItem'
  *        400:
  *          description: Parametros inválidos
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        401:
  *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: CartItem no encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerCart.delete('/:id', passportAuth(), isValidMongoId, deleteCartItem);
 

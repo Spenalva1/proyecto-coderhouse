@@ -106,8 +106,22 @@ const routerOrder = express.Router();
  *                $ref: '#/components/schemas/Orden'
  *        400:
  *          description: No hay productos en el carrito del usuario
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *        401:
+ *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerOrder.post('/', passportAuth(), checkout);
 
@@ -128,8 +142,18 @@ routerOrder.post('/', passportAuth(), checkout);
  *                type: array
  *                items:
  *                  $ref: '#/components/schemas/Orden'
+ *        401:
+ *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerOrder.get('/', passportAuth(), getOrders);
 
@@ -155,10 +179,24 @@ routerOrder.get('/', passportAuth(), getOrders);
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Orden'
+ *        401:
+ *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Orden no encontrada
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerOrder.get('/:id', passportAuth(), isValidMongoId, getOrder);
 

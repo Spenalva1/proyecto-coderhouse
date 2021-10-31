@@ -129,8 +129,16 @@ const routerUser = express.Router();
  *                    description: jwt para enviar en el header como Bearer Token
  *        401:
  *          description: Datos incorrectos o no se envió email y/o password
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerUser.post('/token', login);
 
@@ -153,8 +161,16 @@ routerUser.get('/unauthorized', unauthorized);
  *                $ref: '#/components/schemas/Usuario'
  *        401:
  *          description: Usuario no logueado (JWT inválido)
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerUser.get('/user', passportAuth(), getUser);
 
@@ -216,8 +232,16 @@ routerUser.get('/user', passportAuth(), getUser);
  *                $ref: '#/components/schemas/Usuario'
  *        400:
  *          description: Faltan datos, los datos no son válidos o el email ya está registrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Error del servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  */
 routerUser.post('/user', multerMiddleware.single('photo'), signup);
 
